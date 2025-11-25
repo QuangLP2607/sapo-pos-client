@@ -1,0 +1,45 @@
+@use "sass:color";
+@use "variables" as vars;
+
+// ==================== FLEX ====================
+@mixin flex($direction: row, $justify: center, $align: center, $gap: 0) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  gap: $gap;
+}
+
+// ==================== SIZE ====================
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// ==================== CENTER ABSOLUTE ====================
+@mixin input-base() {
+  width: 100%;
+  border: 1px solid vars.$border-default;
+  border-radius: 5px;
+  padding: 10px;
+
+  &:focus {
+    outline: none;
+    border-color: vars.$border-focus;
+    box-shadow: 0 0 0 2px vars.$accent-primary-light;
+  }
+}
+
+@mixin button-base($bg-color: vars.$accent-primary) {
+  border-radius: 5px;
+  background-color: $bg-color;
+  color: vars.$text-inverse;
+
+  &:hover {
+    background-color: color.scale($bg-color, $lightness: -5%);
+  }
+
+  &:active {
+    background-color: color.scale($bg-color, $lightness: 5%);
+  }
+}

@@ -1,0 +1,58 @@
+// ================= Fonts =================
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap");
+
+$font-primary: "DM Sans", sans-serif;
+
+// ================= Accents =================
+$accent-primary: #0088ff;
+$accent-primary-light: #dff0ff;
+$accent-primary-dark: #004fa4;
+
+// $accent-secondary: #ff0077;
+// $accent-secondary-light: #ff4fa8;
+// $accent-secondary-dark: #cc0055;
+
+$accent-success: #26d426;
+$accent-warning: #ffb526;
+$accent-error: #ff2626;
+$accent-info: #2650ff;
+
+// ================= Backgrounds =================
+$bg-default: #f5f5f5;
+$bg-paper: #ffffff;
+$bg-muted: #f2f2f2;
+$bg-overlay: rgba(0, 0, 0, 0.5);
+
+// ================= Text =================
+$text-primary: #303030;
+$text-secondary: #5a5a5a;
+$text-tertiary: #8c8c8c;
+$text-inverse: #ffffff;
+
+// ================= Borders =================
+$border-default: #d9d9d9;
+$border-muted: #d6d6d8;
+$border-focus: $accent-primary;
+
+// ================= Shadows =================
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
+$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+$shadow-lg: 0 2px 12px rgba(0, 0, 0, 0.25);
+
+// ================= Semantic Colors =================
+$success: $accent-success;
+$warning: $accent-warning;
+$error: $accent-error;
+$info: $accent-info;
+
+// ================= Grayscale =================
+$gray-50: #f9f9f9;
+$gray-100: #f2f2f2;
+$gray-200: #e6e6e6;
+$gray-300: #cccccc;
+$gray-400: #b3b3b3;
+$gray-500: #999999;
+$gray-600: #808080;
+$gray-700: #666666;
+$gray-800: #4d4d4d;
+$gray-900: #333333;

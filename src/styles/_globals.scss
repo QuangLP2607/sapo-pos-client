@@ -1,0 +1,42 @@
+@use "./variables" as vars;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: vars.$font-primary;
+}
+
+body {
+  background-color: vars.$bg-default;
+  color: vars.$text-primary;
+  font-size: 1.4rem;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+}
+
+select {
+  outline: none;
+}
