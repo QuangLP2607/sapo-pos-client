@@ -1,0 +1,32 @@
+.items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.items-per-page__label {
+  font-size: 13px;
+  color: vars.$text-secondary;
+  white-space: nowrap;
+}
+
+.items-per-page__select {
+  padding: 6px 10px;
+  border: 1px solid vars.$border-default;
+  border-radius: 6px;
+  background: vars.$bg-paper;
+  color: vars.$text-primary;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:focus {
+    border-color: vars.$accent-primary;
+    outline: none;
+  }
+
+  &:hover {
+    border-color: vars.$accent-primary;
+  }
+}
+

@@ -40,3 +40,26 @@ input {
 select {
   outline: none;
 }
+
+/* Áp dụng cho mọi scrollbar trong toàn web */
+* {
+  scrollbar-width: thin; // Firefox
+  scrollbar-color: #c1c1c1 transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #9b9b9b;
+}

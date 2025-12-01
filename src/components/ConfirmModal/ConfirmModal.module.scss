@@ -1,0 +1,90 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: vars.$bg-overlay;
+  @include mixins.flex(row, center, center);
+  z-index: 999;
+}
+
+.modal {
+  background: vars.$bg-paper;
+  padding: 1.5rem;
+  width: 380px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: vars.$font-primary;
+  animation: fadeIn 0.18s ease-out;
+  box-shadow: vars.$shadow-md;
+
+  &__line {
+    color: vars.$border-muted;
+    background-color: blue;
+  }
+}
+
+.line {
+  border: 1px solid vars.$border-default;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.header {
+  color: vars.$text-primary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-weight: bold;
+  }
+}
+
+.close-btn {
+  color: vars.$text-tertiary;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: vars.$text-primary;
+  }
+}
+
+.message {
+  min-height: 50px;
+  color: vars.$text-primary;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 8px;
+  border: 1px solid vars.$border-default;
+}
+
+.cancel {
+  @include mixins.button-base(vars.$bg-muted, vars.$text-primary);
+
+  &:hover {
+    background: vars.$gray-200;
+  }
+}
+
+.submit {
+  @include mixins.button-base(vars.$error, vars.$text-inverse);
+}

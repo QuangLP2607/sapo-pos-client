@@ -1,0 +1,85 @@
+.tabs {
+  height: 100%;
+  @include mixins.flex(row, flex-end, flex-end);
+
+  &__add-btn {
+    margin-bottom: 16px;
+    @include mixins.flex(row, center, center);
+    border-radius: 999px;
+    font-size: 16px;
+    padding: 4px;
+    background-color: vars.$accent-primary-light;
+    color: vars.$accent-primary-dark;
+  }
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+
+  &-btn {
+    width: 100px;
+    margin: 0 8px;
+    background-color: vars.$accent-primary-darker;
+    padding: 12px;
+    border-radius: 8px;
+    color: vars.$text-inverse;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    cursor: pointer;
+    border: none;
+
+    &.active {
+      border-radius: 8px 8px 0 0;
+      background-color: vars.$bg-default;
+      color: vars.$text-primary;
+    }
+  }
+
+  &-close {
+    &:hover {
+      transform: scale(1.2);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &-indicator {
+    height: 8px;
+    width: 100%;
+    position: relative;
+
+    &.active {
+      background-color: vars.$bg-default;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background-color: vars.$accent-primary-dark;
+    }
+
+    &.active::before {
+      right: 0;
+      border-radius: 0 0 0 8px;
+    }
+
+    &.active::after {
+      left: 0;
+      border-radius: 0 0 8px 0;
+    }
+
+    &.active::before,
+    &.active::after {
+      background-color: vars.$accent-primary-dark;
+    }
+  }
+}

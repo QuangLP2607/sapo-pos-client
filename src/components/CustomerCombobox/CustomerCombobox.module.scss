@@ -1,0 +1,72 @@
+.cbx {
+  position: relative;
+  display: flex;
+  width: 400px;
+  background-color: vars.$bg-muted;
+  border-radius: 5px;
+  border: 1px solid vars.$border-default;
+  padding: 4px;
+  @include mixins.flex(row, start, center, 10px);
+
+  &__icon {
+    margin-left: 5px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  &__input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    padding: 6px 0;
+  }
+
+  &__dropdown {
+    position: absolute;
+    width: 100%;
+    top: 105%;
+    left: 0;
+    background: vars.$bg-default;
+    border: 1px solid vars.$border-default;
+    border-radius: 6px;
+    padding: 6px 0;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: vars.$shadow-md;
+  }
+
+  &__item {
+    background: vars.$bg-muted;
+    padding: 8px 12px;
+    cursor: pointer;
+
+    &:hover {
+      background: vars.$bg-paper;
+    }
+  }
+
+  &__add {
+    @include mixins.flex(row, center, center);
+    padding: 8px;
+    border-left: 1px solid vars.$accent-primary;
+    color: vars.$accent-primary;
+    transition: all 0.2s ease;
+    user-select: none;
+    cursor: pointer;
+
+    &:hover .cbx__add-icon {
+      filter: brightness(0.8);
+    }
+
+    &:active .cbx__add-icon {
+      transform: scale(0.8);
+    }
+  }
+
+  &__no-data {
+    padding: 8px 12px;
+    text-align: center;
+    color: vars.$text-secondary;
+  }
+}

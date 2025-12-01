@@ -1,0 +1,132 @@
+.order-details {
+  flex: 1;
+  background: vars.$bg-paper;
+  border-radius: 12px;
+  padding: 20px 10px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+
+  &__empty {
+    margin: auto;
+    color: vars.$text-tertiary;
+    font-size: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__empty-icon {
+    font-size: 64px;
+    color: vars.$border-default;
+  }
+
+  &__content {
+    overflow-y: auto;
+    padding-right: 6px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: vars.$border-default;
+      border-radius: 6px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid vars.$border-default;
+    color: vars.$text-primary;
+    font-size: 20px;
+  }
+
+  &__section {
+    margin-bottom: 24px;
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: vars.$text-primary;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid vars.$border-default;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid vars.$gray-100;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &--total {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 2px solid vars.$border-default;
+      font-size: 16px;
+    }
+  }
+
+  &__label {
+    font-weight: 500;
+    color: vars.$text-secondary;
+  }
+
+  &__amount {
+    font-weight: 700;
+    color: vars.$accent-success;
+    font-size: 18px;
+  }
+
+  &__products {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__product {
+    padding: 12px;
+    background: vars.$bg-muted;
+    border-radius: 8px;
+    border: 1px solid vars.$border-default;
+  }
+
+  &__product-name {
+    font-weight: 500;
+    color: vars.$text-primary;
+    margin-bottom: 6px;
+  }
+
+  &__product-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: vars.$text-secondary;
+  }
+
+  &__product-total {
+    font-weight: 600;
+    color: vars.$text-primary;
+  }
+
+  &__note {
+    padding: 12px;
+    background: rgba(vars.$accent-warning, 0.1);
+    border-left: 3px solid vars.$accent-warning;
+    border-radius: 4px;
+    color: vars.$text-primary;
+    margin: 0;
+  }
+}

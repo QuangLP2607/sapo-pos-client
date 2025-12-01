@@ -2,6 +2,16 @@
   flex: 1;
   @include mixins.flex(column, center, center);
 
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url("../../../assets/background/pattern-bg.png") repeat;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
   &__form {
     width: 500px;
     background: vars.$bg-paper;

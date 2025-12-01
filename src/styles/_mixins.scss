@@ -30,10 +30,17 @@
   }
 }
 
-@mixin button-base($bg-color: vars.$accent-primary) {
+@mixin button-base(
+  $bg-color: vars.$accent-primary,
+  $text-color: vars.$text-inverse
+) {
   border-radius: 5px;
   background-color: $bg-color;
-  color: vars.$text-inverse;
+  color: $text-color;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
 
   &:hover {
     background-color: color.scale($bg-color, $lightness: -5%);
