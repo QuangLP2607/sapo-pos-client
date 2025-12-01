@@ -1,0 +1,35 @@
+.header {
+  width: 100%;
+  min-height: 60px;
+  background-color: vars.$accent-primary-dark;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  &-title {
+    color: vars.$text-inverse;
+    font-size: 24px;
+  }
+
+  &-combobox {
+    width: 400px;
+    border-radius: 999px;
+    padding: 0 16px;
+  }
+}
+
+.fullscreen-btn {
+  font-size: 24px;
+  background-color: transparent;
+  color: vars.$text-inverse;
+  margin-left: auto;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}

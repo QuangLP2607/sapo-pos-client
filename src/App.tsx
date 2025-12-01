@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import { AuthProvider } from "@contexts/AuthContext";
+import { SalesTabsProvider } from "@contexts/SalesTabsContext";
 import { AuthRoute } from "./routes/AuthRoute";
 import routes from "./routes";
 
@@ -54,9 +55,11 @@ function AppRouter() {
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <AppRouter />
-      </Router>
+      <SalesTabsProvider>
+        <Router>
+          <AppRouter />
+        </Router>
+      </SalesTabsProvider>
     </AuthProvider>
   );
 }

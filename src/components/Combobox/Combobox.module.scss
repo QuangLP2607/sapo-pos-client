@@ -1,0 +1,62 @@
+.cbx {
+  position: relative;
+  display: flex;
+  width: 400px;
+  background-color: vars.$bg-paper;
+  border-radius: 999px;
+  padding: 0 16px;
+  @include mixins.flex(row, start, center, 10px);
+
+  &__icon {
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: vars.$accent-primary;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    padding: 12px 0;
+  }
+
+  &__dropdown {
+    position: absolute;
+    width: 100%;
+    top: 105%;
+    left: 0;
+    background: vars.$bg-paper;
+    border: 1px solid vars.$border-default;
+    border-radius: 6px;
+    padding: 6px 0;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: vars.$shadow-md;
+  }
+
+  &__item {
+    background: vars.$bg-paper;
+    padding: 8px 12px;
+    cursor: pointer;
+
+    &:hover {
+      background: vars.$bg-muted;
+    }
+  }
+
+  &__no-data {
+    padding: 8px 12px;
+    text-align: center;
+    color: vars.$text-secondary;
+  }
+}

@@ -1,0 +1,93 @@
+.products {
+  flex: 3;
+  background-color: vars.$bg-paper;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 10px;
+    border-bottom: 1px solid vars.$border-default;
+  }
+
+  &-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid vars.$border-default;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .name {
+      font-weight: 500;
+    }
+
+    .sku {
+      font-size: 12px;
+      color: #777;
+    }
+  }
+}
+
+.qty-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  button {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.15s ease;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+
+  span {
+    width: 24px;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.delete-btn-cell {
+  text-align: center;
+}
+
+.remove {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  padding: 4px;
+  transition: 0.2s;
+
+  &:hover {
+    color: #e03131;
+  }
+}
+
+.align-right {
+  text-align: right;
+}

@@ -1,0 +1,76 @@
+.order {
+  height: 100%;
+  flex: 1;
+  background-color: vars.$bg-paper;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__invoice {
+    @include mixins.flex(column, space-between, start, 10px);
+
+    &-line {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      &.total {
+        padding: 4px 0;
+        border-top: 1px solid vars.$border-default;
+      }
+    }
+  }
+
+  &__note-wrapper {
+    flex: 1;
+
+    .note {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+
+      &:focus-visible {
+        outline: 1px solid vars.$accent-primary;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .print {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pay {
+      @include mixins.button-base();
+      width: 100%;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 24px;
+    }
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block !important;
+  }
+
+  .order__search-customer,
+  .order__actions,
+  .order__note-wrapper,
+  .order__invoice {
+    display: none !important;
+  }
+}

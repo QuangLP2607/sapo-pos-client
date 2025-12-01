@@ -1,10 +1,13 @@
-import styles from "./Inventory.module.scss";
 import classNames from "classnames/bind";
+import styles from "./Inventory.module.scss";
+import ProductList from "./components/ProductList";
 
 const cx = classNames.bind(styles);
 
-const Inventory = () => {
-  return <div className={cx("inventory")}>Inventory Page</div>;
-};
-
-export default Inventory;
+export default function Inventory() {
+  return (
+    <div className={cx("inventory")}>
+      <ProductList />
+    </div>
+  );
+}

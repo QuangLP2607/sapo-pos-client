@@ -7,12 +7,13 @@ $font-primary: "DM Sans", sans-serif;
 $accent-primary: #0088ff;
 $accent-primary-light: #dff0ff;
 $accent-primary-dark: #004fa4;
+$accent-primary-darker: #003772;
 
 // $accent-secondary: #ff0077;
 // $accent-secondary-light: #ff4fa8;
 // $accent-secondary-dark: #cc0055;
 
-$accent-success: #26d426;
+$accent-success: #28a745;
 $accent-warning: #ffb526;
 $accent-error: #ff2626;
 $accent-info: #2650ff;
@@ -35,9 +36,9 @@ $border-muted: #d6d6d8;
 $border-focus: $accent-primary;
 
 // ================= Shadows =================
-$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
-$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
-$shadow-lg: 0 2px 12px rgba(0, 0, 0, 0.25);
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 2px 12px rgba(0, 0, 0, 0.1);
 
 // ================= Semantic Colors =================
 $success: $accent-success;

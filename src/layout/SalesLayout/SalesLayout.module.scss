@@ -1,0 +1,22 @@
+.wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__content {
+    width: 100%;
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+
+    &--main {
+      flex: 1;
+      padding: 10px;
+      overflow: auto;
+      min-height: 0;
+    }
+  }
+}
