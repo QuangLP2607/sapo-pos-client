@@ -16,6 +16,18 @@
   height: $height;
 }
 
+// ==================== CIRCLE CENTER ====================
+@mixin circle($size) {
+  width: $size;
+  height: $size;
+  border-radius: 999px;
+  border: 1px solid vars.$border-default;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 // ==================== CENTER ABSOLUTE ====================
 @mixin input-base() {
   width: 100%;

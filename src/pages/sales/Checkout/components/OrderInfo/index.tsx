@@ -8,7 +8,7 @@ import type { Customer } from "@interfaces/customer";
 import CustomerCombobox from "@/components/CustomerCombobox";
 import customerApi from "@services/customerService";
 import printService from "@/services/printService";
-import { useDebouncedSearch } from "@/hooks/useDebouncedSearch";
+import { useDebouncedSearch } from "@/hooks/useDebounce";
 import { useSalesTabs } from "@/hooks/useSalesTabs";
 
 import BillTemplate from "../BillTemplate";

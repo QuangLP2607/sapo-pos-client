@@ -17,8 +17,6 @@ export default function Pagination({
   onPageChange,
   className,
 }: PaginationProps) {
-  if (totalPages <= 1) return null;
-
   const handlePrevious = () => {
     if (currentPage > 1) onPageChange(currentPage - 1);
   };

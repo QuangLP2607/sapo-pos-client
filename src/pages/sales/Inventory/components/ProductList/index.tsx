@@ -4,19 +4,17 @@ import styles from "./ProductList.module.scss";
 import type { Product } from "@interfaces/product";
 import productApi from "@/services/productService";
 import { Icon } from "@iconify/react";
-import PaginationWithItemsPerPage from "@/components/PaginationWithItemsPerPage";
+import { PaginationControls } from "@/components/PaginationControls";
 
 const cx = classNames.bind(styles);
-const DEFAULT_ITEMS_PER_PAGE = 10;
 
 export default function ProductList() {
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  // Fetch data khi search thay đổi
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -35,8 +33,6 @@ export default function ProductList() {
     };
   }, [search]);
 
-  // Pagination
-  const totalPages = Math.ceil(products.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedProducts = products.slice(startIndex, endIndex);
@@ -142,15 +138,12 @@ export default function ProductList() {
             </table>
           </div>
 
-          <PaginationWithItemsPerPage
+          <PaginationControls
             currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
+            totalItems={products.length}
             itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
             onItemsPerPageChange={setItemsPerPage}
-            itemsPerPageOptions={[5, 10, 20, 50]}
-            itemsPerPagePosition="left"
-            className={cx("product-list__pagination")}
           />
         </>
       )}

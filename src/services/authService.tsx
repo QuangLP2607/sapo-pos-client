@@ -22,8 +22,13 @@ const authApi = {
   },
 
   // ===== Logout =====
-  logout() {
-    return apiClient.post<MessageResponse>("/auth/logout");
+  async logout() {
+    try {
+      return await apiClient.post<MessageResponse>("/auth/logout");
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
   },
 
   // ===== Reset password (OWNER) =====

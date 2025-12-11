@@ -28,7 +28,7 @@ export default function PaginationWithItemsPerPage({
 }: PaginationWithItemsPerPageProps) {
   const handleItemsPerPageChange = (newValue: number) => {
     onItemsPerPageChange(newValue);
-    onPageChange(1); // Reset to first page when changing items per page
+    onPageChange(1);
   };
 
   const itemsPerPageSelector = (
@@ -40,18 +40,23 @@ export default function PaginationWithItemsPerPage({
     />
   );
 
-  const pagination = totalPages > 1 ? (
-    <Pagination
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={onPageChange}
-      className={cx("pagination-wrapper__pagination")}
-    />
-  ) : null;
+  const pagination =
+    totalPages > 1 ? (
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+        className={cx("pagination-wrapper__pagination")}
+      />
+    ) : null;
 
   return (
     <div
-      className={cx("pagination-wrapper", `pagination-wrapper--${itemsPerPagePosition}`, className)}
+      className={cx(
+        "pagination-wrapper",
+        `pagination-wrapper--${itemsPerPagePosition}`,
+        className
+      )}
     >
       {itemsPerPagePosition === "top" && itemsPerPageSelector}
       {itemsPerPagePosition === "left" && itemsPerPageSelector}
@@ -61,4 +66,3 @@ export default function PaginationWithItemsPerPage({
     </div>
   );
 }
-

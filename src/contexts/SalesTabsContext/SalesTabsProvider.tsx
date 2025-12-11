@@ -9,6 +9,7 @@ interface SalesTabsProviderProps {
 }
 
 const createInitialOrder = (): Order => ({
+  id: "",
   products: [],
   customer: undefined,
   note: "",

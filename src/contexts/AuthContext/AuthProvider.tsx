@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: Props) => {
 
     setIsLoading(true);
     try {
-      const res = await userApi.getProfile();
+      const res = userApi.getProfile();
       const fetchedUser = res.data as User;
       setUser(fetchedUser);
       localStorage.setItem("user", JSON.stringify(fetchedUser));
@@ -54,16 +54,6 @@ export const AuthProvider = ({ children }: Props) => {
       localStorage.setItem("token", accessToken);
 
       await fetchUserProfile();
-
-      // const mockUser: User = {
-      //   username: "mockuser",
-      //   phoneNum: "0123456789",
-      //   role: "SALES",
-      // };
-
-      // setUser(mockUser);
-
-      // localStorage.setItem("user", JSON.stringify(mockUser));
     },
     [fetchUserProfile]
   );

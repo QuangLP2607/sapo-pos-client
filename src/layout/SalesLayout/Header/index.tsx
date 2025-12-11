@@ -2,14 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-
-import useCheckoutTabs from "@hooks/useCheckoutTabs";
+import useCheckoutTabs from "@/hooks/useCheckoutTabs";
 import Combobox from "@/components/Combobox";
 import TabsBar from "./components/TabsBar";
 import { Icon } from "@iconify/react";
-import { useDebouncedSearch } from "@/hooks/useDebouncedSearch";
+import { useDebouncedSearch } from "@/hooks/useDebounce";
 import productApi from "@/services/productService";
-import type { Product } from "@interfaces/product";
+import type { Product } from "@/interfaces/product";
 
 const cx = classNames.bind(styles);
 
@@ -40,10 +39,11 @@ export default function Header() {
 
   const [query, setQuery] = useState("");
   const pageConfig = pages.find((p) => p.path === location.pathname);
-  
+
   const showSearch = pageConfig?.showSearch ?? false;
   const showTabs = pageConfig?.showTabs ?? false;
   const showTitle = !!pageConfig?.title;
+
   // ---------------- Fetch products ----------------
   const fetchProducts = useCallback(async (q: string): Promise<Product[]> => {
     const res = await productApi.getProducts(q);
@@ -84,6 +84,7 @@ export default function Header() {
       const exists = currentTabData.products.find(
         (p: Product & { qty: number }) => p.id === product.id
       );
+
       if (!exists) {
         updateTabData({
           products: [...currentTabData.products, { ...product, qty: 1 }],
@@ -97,12 +98,10 @@ export default function Header() {
 
   return (
     <header className={cx("header")}>
-      {/* Title for History and Inventory pages */}
-      {showTitle && (
-        <h1 className={cx("header-title")}>{pageConfig.title}</h1>
-      )}
+      {/* Title  */}
+      {showTitle && <h1 className={cx("header-title")}>{pageConfig.title}</h1>}
 
-      {/* Product search - only for checkout */}
+      {/* Product search  */}
       {showSearch && (
         <Combobox
           className={cx("header-combobox")}
@@ -114,7 +113,7 @@ export default function Header() {
         />
       )}
 
-      {/* Tabs - only for checkout */}
+      {/* Tabs */}
       {showTabs && tabs && (
         <TabsBar
           tabs={tabs}
@@ -125,7 +124,7 @@ export default function Header() {
         />
       )}
 
-      {/* Fullscreen button */}
+      {/* Fullscreen */}
       <button
         className={cx("fullscreen-btn")}
         onClick={toggleFullscreen}
