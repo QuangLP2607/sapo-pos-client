@@ -34,10 +34,13 @@ export const AuthProvider = ({ children }: Props) => {
 
     setIsLoading(true);
     try {
-      const res = userApi.getProfile();
-      const fetchedUser = res.data as User;
-      setUser(fetchedUser);
-      localStorage.setItem("user", JSON.stringify(fetchedUser));
+      const res = await userApi.getProfile();
+      const fetchedUser = res.data;
+
+      if ("username" in fetchedUser) {
+        setUser(fetchedUser);
+        localStorage.setItem("user", JSON.stringify(fetchedUser));
+      }
     } catch (err) {
       console.error(" Cannot fetch profile:", err);
       logout();
@@ -60,10 +63,10 @@ export const AuthProvider = ({ children }: Props) => {
 
   // ================= LOAD USER ON APP START =================
   useEffect(() => {
-    if (token && !user && !isLoading) {
+    if (token) {
       fetchUserProfile();
     }
-  }, [token, user, isLoading, fetchUserProfile]);
+  }, [token, fetchUserProfile]);
 
   return (
     <AuthContext.Provider

@@ -41,15 +41,17 @@ export default function Header({
   const userMenuRef = useRef<HTMLDivElement>(null);
   const notifyRef = useRef<HTMLDivElement>(null);
 
-  // CLICK OUTSIDE
+  /* ---------------- CLICK OUTSIDE ---------------- */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
 
+      // Close user menu
       if (userMenuRef.current && !userMenuRef.current.contains(target)) {
         setShowUserMenu(false);
       }
 
+      // Close notification dropdown
       if (notifyRef.current && !notifyRef.current.contains(target)) {
         setShowNotify(false);
       }
@@ -62,12 +64,12 @@ export default function Header({
   return (
     <div className={cx("header")}>
       <div className={cx("header__actions")}>
-        {/* NOTIFICATION */}
+        {/* -------------------------------- NOTIFICATION -------------------------------- */}
         <div
           className={cx("bell")}
           ref={notifyRef}
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // prevent closing instantly
             setShowNotify((prev) => !prev);
             setShowUserMenu(false);
           }}
@@ -106,12 +108,12 @@ export default function Header({
           )}
         </div>
 
-        {/* AVATAR */}
+        {/* -------------------------------- AVATAR MENU -------------------------------- */}
         <div
           className={cx("avatar")}
           ref={userMenuRef}
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // prevent closing immediately
             setShowUserMenu((prev) => !prev);
             setShowNotify(false);
           }}
@@ -127,15 +129,16 @@ export default function Header({
 
           {showUserMenu && (
             <div className={cx("header__dropdown")}>
+              {/* MENU ITEMS */}
               {menuItems.map((item, idx) => {
                 const Comp = item.href ? "a" : "div";
-
                 return (
                   <Comp
                     key={idx}
                     className={cx("header__dropdown-item")}
                     href={item.href}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation(); // keep menu stable
                       item.onClick?.();
                       setShowUserMenu(false);
                     }}
@@ -145,9 +148,13 @@ export default function Header({
                 );
               })}
 
+              {/* LOGOUT BUTTON */}
               <div
                 className={cx("header__dropdown-item")}
-                onClick={() => setShowLogoutConfirm(true)}
+                onClick={(e) => {
+                  e.stopPropagation(); // ⭐ CRITICAL FIX
+                  setShowLogoutConfirm(true);
+                }}
               >
                 <Icon icon="material-symbols:logout" /> Đăng xuất
               </div>
@@ -155,7 +162,7 @@ export default function Header({
           )}
         </div>
 
-        {/* CONFIRM MODAL LOGOUT */}
+        {/* -------------------------------- CONFIRM MODAL -------------------------------- */}
         <ConfirmModal
           open={showLogoutConfirm}
           title="Xác nhận đăng xuất"

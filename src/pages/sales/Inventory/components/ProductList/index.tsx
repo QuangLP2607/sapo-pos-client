@@ -68,10 +68,6 @@ export default function ProductList() {
         <div className={cx("product-list__loading")}>Đang tải...</div>
       ) : (
         <>
-          <div className={cx("product-list__results-count")}>
-            Hiển thị {paginatedProducts.length} kết quả
-          </div>
-
           <div className={cx("product-list__table-wrapper")}>
             <table className={cx("product-list__table")}>
               <thead>

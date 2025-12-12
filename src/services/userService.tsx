@@ -8,10 +8,19 @@ const mockUser: User = {
   role: "OWNER",
 };
 
+// {
+//     "id": 1,
+//     "username": "Owner",
+//     "name": null,
+//     "phoneNum": "0123",
+//     "role": "OWNER",
+//     "active": false
+// }
+
 const userApi = {
   getProfile() {
-    return { data: mockUser };
-    // return apiClient.get<User | MessageResponse>("/user");
+    // return { data: mockUser };
+    return apiClient.get<User>("users/me");
   },
 };
 

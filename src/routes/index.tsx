@@ -9,7 +9,8 @@ import Login from "@pages/auth/Login";
 
 // Admin pages
 import AdminHome from "@pages/admin/Home";
-import AdminCustomers from "@pages/admin/Customers";
+import AdminCustomersList from "@pages/admin/Customers/List";
+import AdminCustomerDetail from "@pages/admin/Customers/Detail";
 import AdminStaffs from "@pages/admin/Staffs";
 import AdminWarehouse from "@pages/admin/Warehouse";
 import AdminProducts from "@pages/admin/Products";
@@ -61,7 +62,13 @@ const routes: RouteType[] = [
   },
   {
     path: "/admin/customers",
-    component: AdminCustomers,
+    component: AdminCustomersList,
+    layout: OwnerLayout,
+    role: "OWNER",
+  },
+  {
+    path: "/admin/customers/:id",
+    component: AdminCustomerDetail,
     layout: OwnerLayout,
     role: "OWNER",
   },

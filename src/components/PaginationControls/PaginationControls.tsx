@@ -21,7 +21,6 @@ export default function PaginationControls({
   return (
     <div
       style={{
-        marginTop: 12,
         display: "flex",
         alignItems: "center",
         width: "100%",

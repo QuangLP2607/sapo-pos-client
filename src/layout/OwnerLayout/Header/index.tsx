@@ -1,24 +1,16 @@
-import { useState } from "react";
 import Header from "@components/layout/Header";
-import ConfirmModal from "@components/ConfirmModal";
 import authApi from "@/services/authService";
 
 export default function AdminHeader() {
-  const [showConfirm, setShowConfirm] = useState(false);
-
   const handleLogout = async () => {
-    try {
-      await authApi.logout();
-      window.location.href = "/login";
-    } finally {
-      setShowConfirm(false);
-    }
+    await authApi.logout();
+    window.location.href = "/login";
   };
 
   return (
     <>
       <Header
-        logout={() => setShowConfirm(true)}
+        logout={handleLogout}
         menuItems={
           [
             //   { icon: "mdi:account", label: "Profile", href: "/profile" },
@@ -33,16 +25,6 @@ export default function AdminHeader() {
             //   { id: 2, title: "Hệ thống cập nhật", description: "Phiên bản 2.1" },
           ]
         }
-      />
-
-      <ConfirmModal
-        open={showConfirm}
-        title="Xác nhận đăng xuất"
-        message="Bạn có chắc muốn đăng xuất không?"
-        confirmText="Đăng xuất"
-        cancelText="Hủy"
-        onCancel={() => setShowConfirm(false)}
-        onConfirm={handleLogout}
       />
     </>
   );

@@ -23,9 +23,15 @@ const OwnerLayout = ({
   return (
     <div className={cx("wrapper")}>
       {showSidebar && <AdminSidebar />}
+
       <div className={cx("wrapper__content")}>
         {showHeader && <AdminHeader />}
-        <main className={cx("wrapper__content--main")}>{children}</main>
+
+        {/* Main layout container */}
+        <div className={cx("mainContainer")}>
+          <main className={cx("main")}>{children}</main>
+        </div>
+
         {showFooter && <AdminFooter />}
       </div>
     </div>

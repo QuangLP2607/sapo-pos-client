@@ -18,9 +18,15 @@ export default function OrderList({
   onSelectOrder,
   selectedOrder,
 }: OrderListProps) {
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
   const [search, setSearch] = useState("");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
+  const [dateFrom, setDateFrom] = useState(
+    firstDayOfMonth.toISOString().split("T")[0]
+  );
+  const [dateTo, setDateTo] = useState(today.toISOString().split("T")[0]);
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -36,18 +42,33 @@ export default function OrderList({
     }
   }, []);
 
-  // ---------------- mapToOptions memoized ----------------
   const mapToOptions = useCallback(
     (items: Order[]) => items.map((o) => o.id),
     []
   );
 
+  // ---------------- fetch all orders when mount ----------------
+  useEffect(() => {
+    const fetchInitial = async () => {
+      setLoading(true);
+      try {
+        const res = await orderApi.getOrders("");
+        setAllOrders(res.data);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInitial();
+  }, []);
+
   // ---------------- useDebouncedSearch ----------------
-  const { results: orders } = useDebouncedSearch<Order>(
+  const { results: searchedOrders } = useDebouncedSearch<Order>(
     search,
     fetchOrders,
     mapToOptions
   );
+
+  const orders = search ? searchedOrders : allOrders;
 
   // ---------------- filter theo date ----------------
   const filteredOrders = useMemo(() => {
@@ -90,6 +111,7 @@ export default function OrderList({
 
   return (
     <div className={cx("order-list")}>
+      {/* ---------------- Search ---------------- */}
       <div className={cx("order-list__search")}>
         <Icon icon="ic:round-search" className={cx("search-icon")} />
         <input
@@ -101,6 +123,7 @@ export default function OrderList({
         />
       </div>
 
+      {/* ---------------- Filters ---------------- */}
       <div className={cx("order-list__filters")}>
         <label className={cx("order-list__filter-label")}>
           <Icon icon="mdi:calendar" className={cx("order-list__filter-icon")} />
@@ -135,6 +158,7 @@ export default function OrderList({
         </div>
       </div>
 
+      {/* ---------------- Results ---------------- */}
       <div className={cx("order-list__results-count")}>
         Tìm thấy {filteredOrders.length} đơn hàng
       </div>
@@ -163,18 +187,15 @@ export default function OrderList({
                       </span>
                     )}
                   </div>
-
                   <div className={cx("order-list__item-content")}>
                     <div className={cx("order-list__item-customer")}>
                       {order.customer?.name || "Khách lẻ"}
                     </div>
-
                     <div className={cx("order-list__item-product")}>
                       {order.products[0]?.name}
                       {order.products.length > 1 &&
                         ` +${order.products.length - 1}`}
                     </div>
-
                     <div className={cx("order-list__item-total")}>
                       {order.payable?.toLocaleString("vi-VN")}đ
                     </div>
