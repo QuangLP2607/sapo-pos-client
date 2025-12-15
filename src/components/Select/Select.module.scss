@@ -1,0 +1,58 @@
+/* Select.module.scss */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.select-display {
+  min-width: 120px;
+  padding: 6px 10px;
+  border: 1px solid vars.$border-default;
+  border-radius: 4px;
+  background-color: vars.$bg-paper;
+  color: vars.$text-secondary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: border 0.2s;
+}
+
+.arrow {
+  @include mixins.flex(row, center, center);
+  transition: transform 0.2s;
+
+  .select-display.open & {
+    transform: rotate(180deg);
+  }
+}
+
+.select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  border: 1px solid vars.$border-default;
+  border-radius: 6px;
+  background-color: vars.$bg-paper;
+  min-width: 100%;
+  box-shadow: vars.$shadow-md;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.select-option {
+  padding: 6px 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: vars.$gray-100;
+  }
+
+  &.selected {
+    background: vars.$gray-200;
+  }
+}

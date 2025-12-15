@@ -32,7 +32,6 @@ export default function TabsBar({
               className={cx("tab-btn", { active: isActive })}
               onClick={() => setActiveTab(tab.id)}
               onMouseDown={(e) => {
-                // Middle click → close tab (only if more than 1 tab)
                 if (e.button === 1 && tabs.length > 1) {
                   e.preventDefault();
                   closeTab(tab.id);

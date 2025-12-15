@@ -1,0 +1,28 @@
+.search {
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid vars.$border-default;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+
+  &:focus-within {
+    border-color: vars.$accent-primary;
+  }
+
+  .search-icon {
+    font-size: 20px;
+    color: vars.$text-secondary;
+  }
+
+  .search-input {
+    background-color: transparent;
+    border: none;
+    padding: 10px 12px;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

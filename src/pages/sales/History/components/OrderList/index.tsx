@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./OrderList.module.scss";
 import type { Order } from "@interfaces/order";
 import orderApi from "@/services/orderService";
 import { Icon } from "@iconify/react";
-import PaginationWithItemsPerPage from "@/components/PaginationWithItemsPerPage";
+import { PaginationControls } from "@/components/PaginationControls";
+import { useDebouncedSearch } from "@/hooks/useDebounce";
 
 interface OrderListProps {
   onSelectOrder: (order: Order) => void;
@@ -12,59 +13,70 @@ interface OrderListProps {
 }
 
 const cx = classNames.bind(styles);
-const DEFAULT_ITEMS_PER_PAGE = 5;
 
 export default function OrderList({
   onSelectOrder,
   selectedOrder,
 }: OrderListProps) {
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
   const [search, setSearch] = useState("");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [dateFrom, setDateFrom] = useState(
+    firstDayOfMonth.toISOString().split("T")[0]
+  );
+  const [dateTo, setDateTo] = useState(today.toISOString().split("T")[0]);
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  // Fetch data khi search thay đổi
+  // ---------------- fetchFn memoized ----------------
+  const fetchOrders = useCallback(async (q: string) => {
+    setLoading(true);
+    try {
+      const res = await orderApi.getOrders(q);
+      return res.data;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const mapToOptions = useCallback(
+    (items: Order[]) => items.map((o) => o.id),
+    []
+  );
+
+  // ---------------- fetch all orders when mount ----------------
   useEffect(() => {
-    let isMounted = true;
-    const fetchData = async () => {
+    const fetchInitial = async () => {
       setLoading(true);
       try {
-        const res = await orderApi.getOrders(search);
-        if (isMounted) setOrders(res.data);
+        const res = await orderApi.getOrders("");
+        setAllOrders(res.data);
       } finally {
-        if (isMounted) setLoading(false);
+        setLoading(false);
       }
     };
+    fetchInitial();
+  }, []);
 
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
-  }, [search]);
+  // ---------------- useDebouncedSearch ----------------
+  const { results: searchedOrders } = useDebouncedSearch<Order>(
+    search,
+    fetchOrders,
+    mapToOptions
+  );
 
-  // Filter theo search và date
+  const orders = search ? searchedOrders : allOrders;
+
+  // ---------------- filter theo date ----------------
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
-      const q = search.toLowerCase();
-      const customerName = order.customer?.name?.toLowerCase() ?? "";
-      const firstProduct = order.products[0]?.name.toLowerCase() ?? "";
-      const orderId = order.id.toLowerCase();
-      const matchesSearch =
-        !q ||
-        customerName.includes(q) ||
-        firstProduct.includes(q) ||
-        orderId.includes(q);
-
-      if (!matchesSearch) return false;
       if (!order.paidAt) return false;
 
       const orderDate = new Date(order.paidAt);
       orderDate.setHours(0, 0, 0, 0);
-
-      if (!dateFrom && !dateTo) return true;
 
       if (dateFrom) {
         const fromDate = new Date(dateFrom);
@@ -80,28 +92,26 @@ export default function OrderList({
 
       return true;
     });
-  }, [orders, search, dateFrom, dateTo]);
+  }, [orders, dateFrom, dateTo]);
 
-  // Pagination
-  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  // ---------------- pagination ----------------
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedOrders = filteredOrders.slice(startIndex, endIndex);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [search, dateFrom, dateTo, itemsPerPage]);
+  }, [search, dateFrom, dateTo]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     const listElement = document.querySelector(`.${cx("order-list")}`);
-    if (listElement) {
-      listElement.scrollTop = 0;
-    }
+    if (listElement) listElement.scrollTop = 0;
   };
 
   return (
     <div className={cx("order-list")}>
+      {/* ---------------- Search ---------------- */}
       <div className={cx("order-list__search")}>
         <Icon icon="ic:round-search" className={cx("search-icon")} />
         <input
@@ -113,19 +123,18 @@ export default function OrderList({
         />
       </div>
 
+      {/* ---------------- Filters ---------------- */}
       <div className={cx("order-list__filters")}>
         <label className={cx("order-list__filter-label")}>
           <Icon icon="mdi:calendar" className={cx("order-list__filter-icon")} />
           Lọc theo ngày:
         </label>
-
         <div className={cx("order-list__date-range")}>
           <input
             type="date"
             value={dateFrom}
             onChange={(e) => setDateFrom(e.target.value)}
             className={cx("order-list__date-input")}
-            placeholder="Từ ngày"
           />
           <span className={cx("order-list__date-separator")}>đến</span>
           <input
@@ -133,7 +142,6 @@ export default function OrderList({
             value={dateTo}
             onChange={(e) => setDateTo(e.target.value)}
             className={cx("order-list__date-input")}
-            placeholder="Đến ngày"
           />
           {(dateFrom || dateTo) && (
             <button
@@ -150,6 +158,7 @@ export default function OrderList({
         </div>
       </div>
 
+      {/* ---------------- Results ---------------- */}
       <div className={cx("order-list__results-count")}>
         Tìm thấy {filteredOrders.length} đơn hàng
       </div>
@@ -200,15 +209,12 @@ export default function OrderList({
             )}
           </ul>
 
-          <PaginationWithItemsPerPage
+          <PaginationControls
             currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
+            totalItems={filteredOrders.length}
             itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
             onItemsPerPageChange={setItemsPerPage}
-            itemsPerPageOptions={[1, 5, 10, 20, 50]}
-            itemsPerPagePosition="left"
-            className={cx("order-list__pagination")}
           />
         </>
       )}

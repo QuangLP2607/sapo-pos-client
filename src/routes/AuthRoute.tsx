@@ -18,7 +18,7 @@ export function AuthRoute({ element, mode }: AuthRouteProps) {
   // mode === "public"
   if (isSignedIn && user) {
     const roleHomeMap: Record<string, string> = {
-      ADMIN: "/admin/home",
+      OWNER: "/admin/home",
       SALES: "/sales/checkout",
       CS: "/cs/home",
       WAREHOUSE: "/warehouse/home",

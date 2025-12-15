@@ -1,0 +1,28 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 0;
+  background: vars.$bg-paper;
+  color: vars.$text-secondary;
+  text-align: center;
+  border-top: 1px solid vars.$border-default;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+    gap: 8px;
+  }
+
+  &__icon {
+    font-size: 20px;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: rotate(-10deg) scale(1.15);
+    }
+  }
+}

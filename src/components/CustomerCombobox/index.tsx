@@ -10,8 +10,8 @@ interface ComboboxProps {
   options: string[];
   onSelect: (value: string) => void;
   className?: string;
-  value?: string; // Hiển thị khi blur (Tên - SĐT)
-  searchQuery?: string; // Hiển thị khi focus
+  value?: string;
+  searchQuery?: string;
   onSearchQueryChange?: (query: string) => void;
 }
 
@@ -30,10 +30,8 @@ export default function CustomerCombobox({
   const ref = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // ✅ Focus thì hiện query, blur thì hiện customer
   const displayValue = focused ? searchQuery || "" : value || "";
 
-  // ✅ Filter realtime, không dùng setState
   const filteredOptions = useMemo(() => {
     return options.filter((opt) =>
       opt.toLowerCase().includes((searchQuery || "").toLowerCase())
@@ -57,7 +55,6 @@ export default function CustomerCombobox({
     setOpen(true);
   };
 
-  // ✅ Click outside
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {

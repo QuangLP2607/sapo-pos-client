@@ -5,13 +5,22 @@ import type { MessageResponse } from "@interfaces/common";
 const mockUser: User = {
   username: "mockuser",
   phoneNum: "0123456789",
-  role: "SALES",
+  role: "OWNER",
 };
+
+// {
+//     "id": 1,
+//     "username": "Owner",
+//     "name": null,
+//     "phoneNum": "0123",
+//     "role": "OWNER",
+//     "active": false
+// }
 
 const userApi = {
   getProfile() {
-    //  return apiClient.get<User | MessageResponse>("/user");
-    return { data: mockUser };
+    // return { data: mockUser };
+    return apiClient.get<User>("users/me");
   },
 };
 

@@ -1,3 +1,4 @@
+// authService.ts
 import apiClient from "./apiClient";
 import type {
   LoginPayload,
@@ -8,7 +9,6 @@ import type {
 import type { MessageResponse } from "@interfaces/common";
 
 const authApi = {
-  // ===== Login =====
   login(payload: LoginPayload) {
     return apiClient.post<LoginResponse | MessageResponse>(
       "/auth/login",
@@ -16,17 +16,22 @@ const authApi = {
     );
   },
 
-  // ===== Signup (OWNER) =====
   signup(payload: SignupPayload) {
     return apiClient.post<MessageResponse>("/auth/signup", payload);
   },
 
-  // ===== Logout =====
-  logout() {
-    return apiClient.post<MessageResponse>("/auth/logout");
+  async logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    try {
+      return await apiClient.post("/auth/logout");
+    } catch (e) {
+      console.warn("Logout API failed (ignored):", e);
+      return null;
+    }
   },
 
-  // ===== Reset password (OWNER) =====
   resetPassword(payload: ResetPasswordPayload) {
     return apiClient.post<MessageResponse>("/auth/reset-password", payload);
   },
