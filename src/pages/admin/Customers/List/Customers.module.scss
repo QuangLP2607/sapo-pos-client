@@ -3,6 +3,16 @@
 .customer {
   @include flex(column, start, center, 16px);
 
+  &__header {
+    width: 100%;
+    @include flex(row, space-between, center);
+
+    &--add {
+      @include button-base();
+      color: $accent-primary;
+    }
+  }
+
   &__pagination {
     margin-top: auto;
   }

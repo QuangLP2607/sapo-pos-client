@@ -7,6 +7,7 @@ import type { Customer } from "@/interfaces/customer";
 import type { Column } from "@/components/CustomerTable";
 
 import { CustomerFilters } from "../components/CustomerFilters";
+import { AddCustomerModal } from "../components/AddCustomerModal";
 import customerApi, {
   type CustomerListParams,
 } from "@/services/customerService";
@@ -111,12 +112,12 @@ export default function Customers() {
     <div className={cx("customer")}>
       <div className={cx("customer__header")}>
         <h2>Khách hàng</h2>
-        <button
-          className={cx("customer__header--add")}
-          onClick={() => navigate("/admin/customers/create")}
-        >
-          Thêm khách hàng
-        </button>
+        <AddCustomerModal
+          onSuccess={() => {
+            // reload list sau khi tạo
+            setPage(1);
+          }}
+        />
       </div>
 
       <CustomerFilters
