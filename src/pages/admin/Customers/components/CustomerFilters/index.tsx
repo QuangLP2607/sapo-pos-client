@@ -1,11 +1,18 @@
+import { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./CustomerFilters.module.scss";
 import { Select } from "@/components/Select";
 import type { CustomerListParams } from "@/services/customerService";
+import { Icon } from "@iconify/react";
+import { resolveDatePreset, type DatePreset } from "./datePreset";
 
 const cx = classNames.bind(styles);
 
-export interface CustomerFiltersProps {
+type Gender = NonNullable<CustomerListParams["gender"]>;
+type SortBy = NonNullable<CustomerListParams["sortBy"]>;
+type SortDir = NonNullable<CustomerListParams["sortDir"]>;
+
+interface Props {
   filters: CustomerListParams;
   onChange: (
     key: keyof CustomerListParams,
@@ -14,153 +21,150 @@ export interface CustomerFiltersProps {
   onClear: () => void;
 }
 
-export function CustomerFilters({
-  filters,
-  onChange,
-  onClear,
-}: CustomerFiltersProps) {
+const genderOptions: { value: Gender; label: string }[] = [
+  { value: "NaN", label: "Tất cả" },
+  { value: "MALE", label: "Nam" },
+  { value: "FEMALE", label: "Nữ" },
+];
+
+const sortOptions: { value: SortBy; label: string }[] = [
+  { value: "name", label: "Tên" },
+  { value: "createdAt", label: "Ngày tạo" },
+  { value: "totalPurchaseAmount", label: "Tổng giao dịch" },
+];
+
+const datePresetOptions: { value: DatePreset; label: string }[] = [
+  { value: "ALL", label: "Tất cả thời gian" },
+  { value: "THIS_WEEK", label: "Tuần này" },
+  { value: "LAST_WEEK", label: "Tuần trước" },
+  { value: "THIS_MONTH", label: "Tháng này" },
+  { value: "LAST_MONTH", label: "Tháng trước" },
+  { value: "THIS_YEAR", label: "Năm nay" },
+];
+
+export function CustomerFilters({ filters, onChange, onClear }: Props) {
+  const [open, setOpen] = useState(false);
+
+  const applyDatePreset = (preset: DatePreset) => {
+    const { startDate, endDate } = resolveDatePreset(preset);
+    onChange("startDate", startDate);
+    onChange("endDate", endDate);
+  };
+
+  const toggleSortDir = () => {
+    const next: SortDir = filters.sortDir === "asc" ? "desc" : "asc";
+    onChange("sortDir", next);
+  };
+
   return (
-    <div className={cx("customer-filters")}>
-      <div className={cx("customer-filters__group")}>
-        {/* Keyword */}
-        <div
-          className={cx(
-            "customer-filters__item",
-            "customer-filters__item--search"
-          )}
-        >
-          <input
-            type="text"
-            value={filters.keyword || ""}
-            onChange={(e) => onChange("keyword", e.target.value)}
-            placeholder="Tìm kiếm khách hàng..."
-            className={cx("customer-filters__input")}
-          />
-        </div>
-
-        {/* Date */}
-        <div
-          className={cx(
-            "customer-filters__item",
-            "customer-filters__item--date"
-          )}
-        >
-          <input
-            type="date"
-            value={filters.startDate || ""}
-            onChange={(e) => onChange("startDate", e.target.value)}
-            className={cx("customer-filters__input")}
-          />
-          <span className={cx("customer-filters__label")}>đến</span>
-          <input
-            type="date"
-            value={filters.endDate || ""}
-            onChange={(e) => onChange("endDate", e.target.value)}
-            className={cx("customer-filters__input")}
-          />
-        </div>
-
-        {/* Amount */}
-        <div
-          className={cx(
-            "customer-filters__item",
-            "customer-filters__item--amount"
-          )}
-        >
-          <input
-            type="number"
-            value={filters.minAmount ?? ""}
-            onChange={(e) =>
-              onChange(
-                "minAmount",
-                e.target.value ? Number(e.target.value) : undefined
-              )
-            }
-            placeholder="Tối thiểu"
-            className={cx("customer-filters__input")}
-          />
-          <span className={cx("customer-filters__label")}>-</span>
-          <input
-            type="number"
-            value={filters.maxAmount ?? ""}
-            onChange={(e) =>
-              onChange(
-                "maxAmount",
-                e.target.value ? Number(e.target.value) : undefined
-              )
-            }
-            placeholder="Tối đa"
-            className={cx("customer-filters__input")}
-          />
-        </div>
-
-        {/* Gender */}
-        <div
-          className={cx(
-            "customer-filters__item",
-            "customer-filters__item--gender"
-          )}
-        >
-          <Select
-            value={filters.gender || "OTHER"}
-            onChange={(v) =>
-              onChange("gender", v as CustomerListParams["gender"])
-            }
-            options={[
-              { value: "OTHER", label: "Tất cả" },
-              { value: "MALE", label: "Nam" },
-              { value: "FEMALE", label: "Nữ" },
-            ]}
-          />
-        </div>
-
-        {/* Sort */}
-        <div
-          className={cx(
-            "customer-filters__item",
-            "customer-filters__item--sort"
-          )}
-        >
-          <Select
-            value={filters.sortBy || "name"}
-            onChange={(v) => onChange("sortBy", v)}
-            options={[
-              { value: "name", label: "Tên" },
-              { value: "createdAt", label: "Ngày tạo" },
-              { value: "lastPurchaseDate", label: "Mua hàng gần nhất" },
-              { value: "totalPurchaseAmount", label: "Tổng giao dịch" },
-            ]}
-          />
-          <Select
-            value={filters.sortDir || "asc"}
-            onChange={(v) => onChange("sortDir", v)}
-            options={[
-              { value: "asc", label: "Tăng dần" },
-              { value: "desc", label: "Giảm dần" },
-            ]}
-          />
-        </div>
-
-        {/* Actions */}
-        <div
-          className={cx(
-            "customer-filters__item",
-            "customer-filters__item--actions"
-          )}
-        >
-          <button
-            className={cx(
-              "customer-filters__btn",
-              "customer-filters__btn--clear"
-            )}
-            onClick={onClear}
-          >
-            Xoá lọc
-          </button>
-        </div>
+    <div className={cx("filters")}>
+      {/* SEARCH */}
+      <div className={cx("filters__search")}>
+        <Icon icon="mdi:magnify" />
+        <input
+          value={filters.keyword || ""}
+          onChange={(e) => onChange("keyword", e.target.value)}
+          placeholder="Tìm kiếm khách hàng..."
+        />
       </div>
 
-      <div className={cx("customer-filters__add")}></div>
+      {/* FILTER BUTTON */}
+      <button
+        className={cx("filters__toggle")}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <Icon icon="mdi:filter-variant" />
+        Bộ lọc
+      </button>
+
+      {/* FILTER PANEL */}
+      {open && (
+        <div className={cx("filters__panel")}>
+          {/* DATE PRESET */}
+          <div className={cx("filters__row")}>
+            <label>Thời gian</label>
+            <Select
+              value="ALL"
+              onChange={(v) => applyDatePreset(v as DatePreset)}
+              options={datePresetOptions}
+            />
+          </div>
+
+          {/* AMOUNT */}
+          <div className={cx("filters__row")}>
+            <label>Giá trị</label>
+            <input
+              type="number"
+              placeholder="Min"
+              value={filters.minAmount ?? ""}
+              onChange={(e) =>
+                onChange(
+                  "minAmount",
+                  e.target.value ? Number(e.target.value) : undefined
+                )
+              }
+            />
+            <span>→</span>
+            <input
+              type="number"
+              placeholder="Max"
+              value={filters.maxAmount ?? ""}
+              onChange={(e) =>
+                onChange(
+                  "maxAmount",
+                  e.target.value ? Number(e.target.value) : undefined
+                )
+              }
+            />
+          </div>
+
+          {/* GENDER */}
+          <div className={cx("filters__row")}>
+            <label>Giới tính</label>
+            <Select
+              value={filters.gender ?? "OTHER"}
+              onChange={(v) => onChange("gender", v as Gender)}
+              options={genderOptions}
+            />
+          </div>
+
+          {/* SORT */}
+          <div className={cx("filters__row")}>
+            <label>Sắp xếp</label>
+            <Select
+              value={filters.sortBy ?? "name"}
+              onChange={(v) => onChange("sortBy", v as SortBy)}
+              options={sortOptions}
+            />
+            <button
+              className={cx("sort-dir")}
+              onClick={toggleSortDir}
+              title="Đổi chiều sắp xếp"
+            >
+              <Icon
+                icon={
+                  filters.sortDir === "desc"
+                    ? "mdi:sort-descending"
+                    : "mdi:sort-ascending"
+                }
+              />
+            </button>
+          </div>
+
+          {/* ACTIONS */}
+          <div className={cx("filters__actions")}>
+            <button className={cx("btn", "btn--ghost")} onClick={onClear}>
+              Xoá lọc
+            </button>
+            <button
+              className={cx("btn", "btn--primary")}
+              onClick={() => setOpen(false)}
+            >
+              Áp dụng
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

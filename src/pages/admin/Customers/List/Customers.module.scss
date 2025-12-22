@@ -1,17 +1,16 @@
 @use "@/styles" as *;
 
 .customer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include flex(column, start, center, 16px);
 
-  &__header {
-    @include flex(row, space-between, center);
+  &__pagination {
+    margin-top: auto;
+  }
+}
 
-    &--add {
-      @include button-base();
-      color: $accent-primary;
-    }
-    // use @mixin.flex(row,center,center);
+@media (max-width: 768px) {
+  .student__filters {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

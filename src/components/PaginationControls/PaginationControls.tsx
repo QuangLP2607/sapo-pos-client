@@ -19,7 +19,14 @@ export default function PaginationControls({
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "40px" }}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "40px",
+        marginTop: "auto",
+      }}
+    >
       {/* CENTER */}
       <div
         style={{
