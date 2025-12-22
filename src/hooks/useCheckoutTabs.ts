@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SalesTabsContext } from "@contexts/SalesTabsContext";
+import { SalesTabsContext } from "@/contexts/SalesTabsContext";
 import type { SalesTabsContextType } from "@/interfaces/salesTabs";
 
 const useCheckoutTabs = (): SalesTabsContextType => {

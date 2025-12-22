@@ -45,15 +45,24 @@ export default function Header() {
   const showTitle = !!pageConfig?.title;
 
   // ---------------- Fetch products ----------------
-  const fetchProducts = useCallback(async (q: string): Promise<Product[]> => {
-    const res = await productApi.getProducts(q);
-    return res.data;
-  }, []);
-
-  const mapProductsToOptions = useCallback(
-    (data: Product[]): string[] => data.map((p) => p.name),
+  const fetchProducts = useCallback(
+    async (keyword: string): Promise<Product[]> => {
+      const res = await productApi.getProducts({
+        page: 0,
+        size: 10,
+        sortBy: "id",
+        keyword,
+      });
+      return res.data;
+    },
     []
   );
+
+  const mapProductsToOptions = useCallback((data: Product[]): string[] => {
+    return data.flatMap(
+      (p) => p.variants?.map((v) => `${p.name} (${v.title}) - (${v.sku})`) || []
+    );
+  }, []);
 
   const { results: productsList, options } = useDebouncedSearch<Product>(
     query,

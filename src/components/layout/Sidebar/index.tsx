@@ -1,118 +1,146 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
 import { Icon } from "@iconify/react";
+import ConfirmModal from "@/components/ConfirmModal";
+import Item from "./components/SidebarItem";
 
 const cx = classNames.bind(styles);
 
+/* ================= TYPES ================= */
+export interface DropdownConfig<T> {
+  options: readonly T[];
+  selectedIndex: number;
+  onSelect: (index: number) => void;
+  getLabel: (option: T) => string;
+}
+
 export interface MenuItem {
-  to: string;
-  icon: string;
   label: string;
+  icon?: string;
+  to?: string;
+  items?: MenuItem[];
+  dropdown?: DropdownConfig<unknown>;
 }
 
 export interface MenuGroup {
-  title: string;
+  title?: string;
   items: MenuItem[];
 }
 
 interface SidebarProps {
   menuGroups: MenuGroup[];
   logo?: { small: string; large: string };
-  onLogout?: () => void;
+  logout?: () => void;
 }
 
-export default function Sidebar({ menuGroups, logo }: SidebarProps) {
-  const location = useLocation();
+export default function Sidebar({ menuGroups, logo, logout }: SidebarProps) {
+  const { pathname } = useLocation();
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(() => {
-    return localStorage.getItem("sidebar-expanded") === "true";
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem("sidebar-collapsed") !== "false";
+    } catch {
+      return true;
+    }
   });
 
-  useEffect(() => {
-    localStorage.setItem("sidebar-expanded", String(isExpanded));
-  }, [isExpanded]);
-
   const toggleSidebar = () => {
-    setIsExpanded((prev) => !prev);
+    setCollapsed((prev) => {
+      localStorage.setItem("sidebar-collapsed", String(!prev));
+      return !prev;
+    });
   };
 
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
   return (
-    <aside className={cx("sidebar", { expanded: isExpanded })}>
-      {/* Logo */}
-      <Link to="/xxx" className={cx("sidebar__logo")}>
-        {logo && (
-          <>
-            <img
-              src={logo.small}
-              alt="Logo"
-              className={cx("sidebar__logo-img")}
-            />
-            {isExpanded && (
-              <img
-                src={logo.large}
-                alt="Logo"
-                className={cx("sidebar__logo-img")}
-              />
-            )}
-          </>
-        )}
-      </Link>
+    <div className={cx("sidebar-wrapper")}>
+      {!collapsed && (
+        <div
+          className={cx("sidebar-overlay")}
+          onClick={() => setCollapsed(true)}
+        />
+      )}
 
-      {/* Menu */}
-      <ul className={cx("sidebar__menu")}>
-        {menuGroups.map((group) => (
-          <li key={group.title} className={cx("sidebar__submenu")}>
-            <div className={cx("sidebar__submenu-title")}>
-              <hr
-                className={cx("sidebar__submenu-title-line", {
-                  visible: !isExpanded,
-                })}
-              />
-              <span
-                className={cx("sidebar__submenu-title-text", {
-                  visible: isExpanded,
-                })}
-              >
-                {group.title}
-              </span>
-            </div>
-
-            <ul className={cx("sidebar__submenu-list")}>
-              {group.items.map((item) => {
-                const isActive = location.pathname.startsWith(item.to);
-
-                return (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className={cx("sidebar__submenu-item", {
-                      active: isActive,
-                    })}
-                  >
-                    <Icon icon={item.icon} className={cx("sidebar__icon")} />
-                    <span className={cx("sidebar__content")}>{item.label}</span>
-                  </Link>
-                );
-              })}
-            </ul>
-          </li>
-        ))}
-      </ul>
-
-      {/* Toggle Button */}
-      <button
-        type="button"
-        className={cx("sidebar__toggle")}
-        onClick={toggleSidebar}
-      >
+      <button className={cx("sidebar-toggle")} onClick={toggleSidebar}>
         <Icon
           icon={
-            isExpanded ? "line-md:menu-fold-left" : "line-md:menu-fold-right"
+            collapsed ? "line-md:menu-fold-right" : "line-md:menu-fold-left"
           }
         />
       </button>
-    </aside>
+
+      <aside className={cx("sidebar", { collapsed })}>
+        {/* LOGO */}
+        <Link to="/" className={cx("sidebar-logo")}>
+          {logo && (
+            <>
+              <img
+                src={logo.small}
+                className={cx("sidebar-logo__img", "is-small")}
+              />
+              <img
+                src={logo.large}
+                className={cx("sidebar-logo__img", "is-large")}
+              />
+            </>
+          )}
+        </Link>
+
+        {/* MENU */}
+        <ul className={cx("sidebar-menu")}>
+          {menuGroups.map((group, idx) => {
+            const hasTitle = Boolean(group.title);
+
+            return (
+              <li key={idx} className={cx("menu-group")}>
+                {/* ===== GROUP TITLE ===== */}
+                <div className={cx("menu-group__title", { hasTitle })}>
+                  <hr />
+                  {hasTitle && <span>{group.title}</span>}
+                </div>
+
+                <ul className={cx("menu-group__list")}>
+                  {group.items.map((item, i) => (
+                    <Item
+                      key={i}
+                      data={item}
+                      collapsed={collapsed}
+                      path={pathname}
+                      onExpand={toggleSidebar}
+                    />
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+
+          {logout && (
+            <button
+              className={cx("sidebar-logout")}
+              onClick={() => setShowLogoutConfirm(true)}
+            >
+              <Icon icon="line-md:logout" />
+              {!collapsed && <span>Đăng xuất</span>}
+            </button>
+          )}
+        </ul>
+
+        <ConfirmModal
+          open={showLogoutConfirm}
+          title="Xác nhận đăng xuất"
+          message="Bạn có chắc muốn đăng xuất?"
+          confirmText="Đăng xuất"
+          cancelText="Hủy"
+          onCancel={() => setShowLogoutConfirm(false)}
+          onConfirm={() => {
+            logout?.();
+            setShowLogoutConfirm(false);
+          }}
+        />
+      </aside>
+    </div>
   );
 }

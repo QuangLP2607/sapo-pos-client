@@ -1,6 +1,8 @@
+@use "@/styles" as *;
+
 .inventory {
   display: flex;
   height: 100%;
-  background: vars.$bg-default;
+  background: $bg-default;
   overflow: hidden;
 }

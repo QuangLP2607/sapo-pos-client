@@ -1,5 +1,17 @@
+@use "@/styles" as *;
+
 .customer {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  &__header {
+    @include flex(row, space-between, center);
+
+    &--add {
+      @include button-base();
+      color: $accent-primary;
+    }
+    // use @mixin.flex(row,center,center);
+  }
 }

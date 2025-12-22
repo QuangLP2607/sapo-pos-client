@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import classNames from "classnames/bind";
-import { Icon } from "@iconify/react";
 import styles from "./Header.module.scss";
 import ConfirmModal from "@/components/ConfirmModal";
+import NotificationMenu from "./components/NotificationMenu";
+import UserMenu from "./components/UserMenu";
 
 const cx = classNames.bind(styles);
 
@@ -33,30 +34,11 @@ export default function Header({
   logout,
   notifications = [],
 }: HeaderProps) {
-  const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showNotify, setShowNotify] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-  const [imgError, setImgError] = useState(false);
+  const [openMenu, setOpenMenu] = useState<"user" | "notify" | null>(null);
 
-  const userMenuRef = useRef<HTMLDivElement>(null);
-  const notifyRef = useRef<HTMLDivElement>(null);
-
-  /* ---------------- CLICK OUTSIDE ---------------- */
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as Node;
-
-      // Close user menu
-      if (userMenuRef.current && !userMenuRef.current.contains(target)) {
-        setShowUserMenu(false);
-      }
-
-      // Close notification dropdown
-      if (notifyRef.current && !notifyRef.current.contains(target)) {
-        setShowNotify(false);
-      }
-    };
-
+    const handleClickOutside = () => setOpenMenu(null);
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
@@ -64,118 +46,37 @@ export default function Header({
   return (
     <div className={cx("header")}>
       <div className={cx("header__actions")}>
-        {/* -------------------------------- NOTIFICATION -------------------------------- */}
-        <div
-          className={cx("bell")}
-          ref={notifyRef}
-          onClick={(e) => {
-            e.stopPropagation(); // prevent closing instantly
-            setShowNotify((prev) => !prev);
-            setShowUserMenu(false);
-          }}
-        >
-          <Icon className={cx("bell-icon")} icon="iconoir:bell" />
-          {notifications.length > 0 && (
-            <span className={cx("bell-dot")}>{notifications.length}</span>
-          )}
+        <NotificationMenu
+          notifications={notifications}
+          open={openMenu === "notify"}
+          onToggle={() =>
+            setOpenMenu((prev) => (prev === "notify" ? null : "notify"))
+          }
+        />
 
-          {showNotify && (
-            <div className={cx("header__dropdown", "header__dropdown--notify")}>
-              {notifications.length === 0 ? (
-                <div className={cx("header__dropdown-item")}>
-                  Không có thông báo
-                </div>
-              ) : (
-                notifications.map((n) => {
-                  const Comp = n.href ? "a" : "div";
-                  return (
-                    <Comp
-                      key={n.id}
-                      className={cx("header__dropdown-item")}
-                      href={n.href}
-                    >
-                      {n.title}
-                      {n.description && (
-                        <div className={cx("notification-desc")}>
-                          {n.description}
-                        </div>
-                      )}
-                    </Comp>
-                  );
-                })
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* -------------------------------- AVATAR MENU -------------------------------- */}
-        <div
-          className={cx("avatar")}
-          ref={userMenuRef}
-          onClick={(e) => {
-            e.stopPropagation(); // prevent closing immediately
-            setShowUserMenu((prev) => !prev);
-            setShowNotify(false);
-          }}
-        >
-          {avatarUrl && !imgError && (
-            <img
-              className={cx("avatar-img")}
-              src={avatarUrl}
-              alt="Avatar"
-              onError={() => setImgError(true)}
-            />
-          )}
-
-          {showUserMenu && (
-            <div className={cx("header__dropdown")}>
-              {/* MENU ITEMS */}
-              {menuItems.map((item, idx) => {
-                const Comp = item.href ? "a" : "div";
-                return (
-                  <Comp
-                    key={idx}
-                    className={cx("header__dropdown-item")}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.stopPropagation(); // keep menu stable
-                      item.onClick?.();
-                      setShowUserMenu(false);
-                    }}
-                  >
-                    <Icon icon={item.icon} /> {item.label}
-                  </Comp>
-                );
-              })}
-
-              {/* LOGOUT BUTTON */}
-              <div
-                className={cx("header__dropdown-item")}
-                onClick={(e) => {
-                  e.stopPropagation(); // ⭐ CRITICAL FIX
-                  setShowLogoutConfirm(true);
-                }}
-              >
-                <Icon icon="material-symbols:logout" /> Đăng xuất
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* -------------------------------- CONFIRM MODAL -------------------------------- */}
-        <ConfirmModal
-          open={showLogoutConfirm}
-          title="Xác nhận đăng xuất"
-          message="Bạn có chắc muốn đăng xuất?"
-          confirmText="Đăng xuất"
-          cancelText="Hủy"
-          onCancel={() => setShowLogoutConfirm(false)}
-          onConfirm={() => {
-            logout?.();
-            setShowLogoutConfirm(false);
-          }}
+        <UserMenu
+          avatarUrl={avatarUrl}
+          menuItems={menuItems}
+          open={openMenu === "user"}
+          onToggle={() =>
+            setOpenMenu((prev) => (prev === "user" ? null : "user"))
+          }
+          onLogout={() => setShowLogoutConfirm(true)}
         />
       </div>
+
+      <ConfirmModal
+        open={showLogoutConfirm}
+        title="Xác nhận đăng xuất"
+        message="Bạn có chắc muốn đăng xuất?"
+        confirmText="Đăng xuất"
+        cancelText="Hủy"
+        onCancel={() => setShowLogoutConfirm(false)}
+        onConfirm={() => {
+          logout?.();
+          setShowLogoutConfirm(false);
+        }}
+      />
     </div>
   );
 }

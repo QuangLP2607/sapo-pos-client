@@ -1,6 +1,8 @@
+@use "@/styles" as *;
+
 .order-details {
   flex: 1;
-  background: vars.$bg-paper;
+  background: $bg-paper;
   border-radius: 12px;
   padding: 20px 10px 20px 20px;
   display: flex;
@@ -10,7 +12,7 @@
 
   &__empty {
     margin: auto;
-    color: vars.$text-tertiary;
+    color: $text-tertiary;
     font-size: 15px;
     text-align: center;
     display: flex;
@@ -21,7 +23,7 @@
 
   &__empty-icon {
     font-size: 64px;
-    color: vars.$border-default;
+    color: $border-default;
   }
 
   &__content {
@@ -33,7 +35,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: vars.$border-default;
+      background: $border-default;
       border-radius: 6px;
     }
   }
@@ -41,8 +43,8 @@
   &__title {
     margin-bottom: 20px;
     padding-bottom: 12px;
-    border-bottom: 2px solid vars.$border-default;
-    color: vars.$text-primary;
+    border-bottom: 2px solid $border-default;
+    color: $text-primary;
     font-size: 20px;
   }
 
@@ -53,10 +55,10 @@
   &__subtitle {
     font-size: 16px;
     font-weight: 600;
-    color: vars.$text-primary;
+    color: $text-primary;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px solid vars.$border-default;
+    border-bottom: 1px solid $border-default;
   }
 
   &__row {
@@ -64,7 +66,7 @@
     justify-content: space-between;
     padding: 8px 0;
     font-size: 14px;
-    border-bottom: 1px solid vars.$gray-100;
+    border-bottom: 1px solid $gray-100;
 
     &:last-child {
       border-bottom: none;
@@ -73,19 +75,19 @@
     &--total {
       margin-top: 8px;
       padding-top: 12px;
-      border-top: 2px solid vars.$border-default;
+      border-top: 2px solid $border-default;
       font-size: 16px;
     }
   }
 
   &__label {
     font-weight: 500;
-    color: vars.$text-secondary;
+    color: $text-secondary;
   }
 
   &__amount {
     font-weight: 700;
-    color: vars.$accent-success;
+    color: $accent-success;
     font-size: 18px;
   }
 
@@ -97,14 +99,14 @@
 
   &__product {
     padding: 12px;
-    background: vars.$bg-muted;
+    background: $bg-muted;
     border-radius: 8px;
-    border: 1px solid vars.$border-default;
+    border: 1px solid $border-default;
   }
 
   &__product-name {
     font-weight: 500;
-    color: vars.$text-primary;
+    color: $text-primary;
     margin-bottom: 6px;
   }
 
@@ -113,20 +115,20 @@
     justify-content: space-between;
     align-items: center;
     font-size: 13px;
-    color: vars.$text-secondary;
+    color: $text-secondary;
   }
 
   &__product-total {
     font-weight: 600;
-    color: vars.$text-primary;
+    color: $text-primary;
   }
 
   &__note {
     padding: 12px;
-    background: rgba(vars.$accent-warning, 0.1);
-    border-left: 3px solid vars.$accent-warning;
+    background: rgba($accent-warning, 0.1);
+    border-left: 3px solid $accent-warning;
     border-radius: 4px;
-    color: vars.$text-primary;
+    color: $text-primary;
     margin: 0;
   }
 }

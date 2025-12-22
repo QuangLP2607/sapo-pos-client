@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import classNames from "classnames/bind";
-import customerApi, { type Customer } from "@/services/customerService1";
+import type { Customer } from "@/interfaces/customer";
+import customerApi from "@/services/customerService";
 import styles from "./CustomerDetail.module.scss";
 
 const cx = classNames.bind(styles);
@@ -16,8 +17,8 @@ export default function CustomerDetail() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await customerApi.getById(Number(id));
-        setCustomer(res.data);
+        const res = await customerApi.getCustomerById(Number(id));
+        setCustomer(res);
       } catch (err) {
         console.error("Failed to load customer", err);
         setCustomer(null);
@@ -107,9 +108,9 @@ export default function CustomerDetail() {
           {customer.purchases && customer.purchases.length > 0 ? (
             customer.purchases.map((p) => (
               <tr key={p.id}>
-                <td>{new Date(p.purchaseDate).toLocaleString("vi-VN")}</td>
+                {/* <td>{new Date(p.purchaseDate).toLocaleString("vi-VN")}</td>
                 <td>{p.amount.toLocaleString("vi-VN")} ₫</td>
-                <td>{p.note || "-"}</td>
+                <td>{p.note || "-"}</td> */}
               </tr>
             ))
           ) : (

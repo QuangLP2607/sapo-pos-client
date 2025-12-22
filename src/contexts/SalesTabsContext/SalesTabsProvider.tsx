@@ -2,7 +2,7 @@ import { useState, useCallback, type ReactNode } from "react";
 import { SalesTabsContext } from "./SalesTabsContext";
 import type { TabItem, SalesTabsContextType } from "@/interfaces/salesTabs";
 import type { Order } from "@/interfaces/order";
-import ConfirmModal from "@components/ConfirmModal";
+import ConfirmModal from "@/components/ConfirmModal";
 
 interface SalesTabsProviderProps {
   children: ReactNode;
@@ -45,11 +45,28 @@ export const SalesTabsProvider = ({ children }: SalesTabsProviderProps) => {
   const actuallyCloseTab = useCallback(
     (id: string) => {
       setTabs((prev) => {
+        const index = prev.findIndex((t) => t.id === id);
+        if (index === -1) return prev;
+
         const filtered = prev.filter((t) => t.id !== id);
+
+        // Nếu tab đang active bị đóng
         if (id === activeTab) {
-          if (filtered.length > 0) setActiveTab(filtered[0].id);
-          else addTab();
+          let nextActiveId;
+          if (filtered.length > 0) {
+            // ưu tiên tab bên trái, nếu không có thì tab bên phải
+            if (index - 1 >= 0) {
+              nextActiveId = filtered[index - 1].id;
+            } else {
+              nextActiveId = filtered[0].id;
+            }
+            setActiveTab(nextActiveId);
+          } else {
+            // không còn tab nào, tạo tab mới
+            addTab();
+          }
         }
+
         return filtered;
       });
     },

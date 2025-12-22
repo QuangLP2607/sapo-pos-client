@@ -1,26 +1,45 @@
 import apiClient from "./apiClient";
-import type { User } from "@interfaces/user";
-import type { MessageResponse } from "@interfaces/common";
+import type { User } from "@/interfaces/user";
+import type { ListParams, PaginatedResponse } from "@/interfaces/common";
 
-const mockUser: User = {
-  username: "mockuser",
-  phoneNum: "0123456789",
-  role: "OWNER",
-};
+// ===== Types ================================================================
+export type UserListItem = User;
 
-// {
-//     "id": 1,
-//     "username": "Owner",
-//     "name": null,
-//     "phoneNum": "0123",
-//     "role": "OWNER",
-//     "active": false
-// }
+export type UpdateUserPayload = Pick<
+  User,
+  "username" | "name" | "phoneNum" | "role" | "isActive"
+>;
 
+// ===== API ==================================================================
 const userApi = {
-  getProfile() {
-    // return { data: mockUser };
-    return apiClient.get<User>("users/me");
+  async getProfile(): Promise<User> {
+    const res = await apiClient.get<User>("users/me");
+    return res.data!;
+  },
+
+  async getUsers(
+    params: ListParams
+  ): Promise<PaginatedResponse<"users", User>> {
+    const res = await apiClient.get<PaginatedResponse<"users", User>>("users", {
+      params,
+    });
+
+    return res.data!;
+  },
+
+  async getUserById(id: number): Promise<UserListItem> {
+    const res = await apiClient.get<UserListItem>(`users/${id}`);
+    return res.data!;
+  },
+
+  async updateUser(
+    id: number,
+    payload: UpdateUserPayload
+  ): Promise<UserListItem> {
+    const res = await apiClient.put<UserListItem>(`users/${id}`, null, {
+      params: payload,
+    });
+    return res.data!;
   },
 };
 

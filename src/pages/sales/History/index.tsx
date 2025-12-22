@@ -1,7 +1,7 @@
 import { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./History.module.scss";
-import type { Order } from "@interfaces/order";
+import type { Order } from "@/interfaces/order";
 import OrderList from "./components/OrderList";
 import OrderDetails from "./components/OrderDetails";
 

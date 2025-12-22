@@ -1,4 +1,3 @@
-// src/components/BillTemplate.tsx
 import type { Order } from "@/interfaces/order";
 import "./BillTemplate.scss";
 

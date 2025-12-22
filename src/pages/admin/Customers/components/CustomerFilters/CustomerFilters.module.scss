@@ -1,3 +1,5 @@
+@use "@/styles" as *;
+
 .customer-filters {
   display: flex;
   justify-content: space-between;
@@ -6,9 +8,9 @@
 
   &__group {
     display: flex;
-    border: 1px dashed vars.$border-default;
+    border: 1px dashed $border-default;
     border-radius: 8px;
-    background-color: vars.$bg-default;
+    background-color: $bg-default;
   }
 
   &__item {
@@ -16,7 +18,7 @@
     align-items: center;
     gap: 12px;
     padding: 12px;
-    border-left: 1px dashed vars.$border-default;
+    border-left: 1px dashed $border-default;
 
     &:first-child {
       border-left: none;
@@ -32,9 +34,9 @@
 
   &__input {
     padding: 6px 10px;
-    border: 1px solid vars.$border-default;
+    border: 1px solid $border-default;
     border-radius: 4px;
-    color: vars.$text-secondary;
+    color: $text-secondary;
   }
 
   &__btn {
@@ -45,11 +47,11 @@
     transition: background 0.2s;
 
     &--clear {
-      @include mixins.button-base(vars.$gray-500);
+      @include button-base($gray-500);
     }
 
     &--add {
-      @include mixins.button-base();
+      @include button-base();
     }
   }
 }

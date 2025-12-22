@@ -1,24 +1,25 @@
+@use "@/styles" as *;
+
 .login {
-  flex: 1;
-  @include mixins.flex(column, center, center);
+  @include flex(column, center, center);
 
   &::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: url("../../../assets/background/pattern-bg.png") repeat;
+    background: url("@/assets/background/pattern-bg.png") repeat;
     opacity: 0.8;
     pointer-events: none;
   }
 
   &__form {
     width: 500px;
-    background: vars.$bg-paper;
-    @include mixins.flex(column, center, center, 50px);
+    background: $bg-paper;
+    @include flex(column, center, center, 50px);
     padding: 50px;
     border-radius: 8px;
-    box-shadow: vars.$shadow-sm;
+    box-shadow: $shadow-sm;
 
     &--title {
       font-size: 32px;
@@ -26,19 +27,19 @@
 
     &--fields {
       width: 100%;
-      @include mixins.flex(column, center, center, 20px);
+      @include flex(column, center, center, 20px);
 
       .field {
         width: 100%;
-        @include mixins.flex(column, flex-start, flex-start, 8px);
+        @include flex(column, flex-start, flex-start, 8px);
 
         &__input {
-          @include mixins.input-base();
+          @include input-base();
         }
       }
     }
     &--btn {
-      @include mixins.button-base();
+      @include button-base();
       width: 100%;
       padding: 12px;
       border-radius: 999px;

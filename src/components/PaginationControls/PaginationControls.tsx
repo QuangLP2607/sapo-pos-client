@@ -19,27 +19,13 @@ export default function PaginationControls({
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        width: "100%",
-      }}
-    >
-      {/* LEFT */}
-      <div style={{ flex: 1 }}>
-        <ItemsPerPageSelector
-          itemsPerPage={itemsPerPage}
-          onItemsPerPageChange={onItemsPerPageChange}
-        />
-      </div>
-
+    <div style={{ position: "relative", width: "100%", height: "40px" }}>
       {/* CENTER */}
       <div
         style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
         }}
       >
         <Pagination
@@ -49,8 +35,13 @@ export default function PaginationControls({
         />
       </div>
 
-      {/* RIGHT*/}
-      <div style={{ flex: 1 }}></div>
+      {/* RIGHT */}
+      <div style={{ position: "absolute", right: 0 }}>
+        <ItemsPerPageSelector
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+        />
+      </div>
     </div>
   );
 }

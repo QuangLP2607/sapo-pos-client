@@ -1,4 +1,5 @@
-/* Select.module.scss */
+@use "@/styles" as *;
+
 .select-wrapper {
   position: relative;
   display: inline-block;
@@ -9,10 +10,10 @@
 .select-display {
   min-width: 120px;
   padding: 6px 10px;
-  border: 1px solid vars.$border-default;
+  border: 1px solid $border-default;
   border-radius: 4px;
-  background-color: vars.$bg-paper;
-  color: vars.$text-secondary;
+  background-color: $bg-paper;
+  color: $text-secondary;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,7 +23,7 @@
 }
 
 .arrow {
-  @include mixins.flex(row, center, center);
+  @include flex(row, center, center);
   transition: transform 0.2s;
 
   .select-display.open & {
@@ -35,11 +36,11 @@
   top: calc(100% + 4px);
   left: 0;
   z-index: 10;
-  border: 1px solid vars.$border-default;
+  border: 1px solid $border-default;
   border-radius: 6px;
-  background-color: vars.$bg-paper;
+  background-color: $bg-paper;
   min-width: 100%;
-  box-shadow: vars.$shadow-md;
+  box-shadow: $shadow-md;
   max-height: 200px;
   overflow-y: auto;
 }
@@ -49,10 +50,10 @@
   cursor: pointer;
 
   &:hover {
-    background: vars.$gray-100;
+    background: $gray-100;
   }
 
   &.selected {
-    background: vars.$gray-200;
+    background: $gray-200;
   }
 }

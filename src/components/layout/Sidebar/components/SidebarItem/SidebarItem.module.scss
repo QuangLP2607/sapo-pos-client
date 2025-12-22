@@ -1,0 +1,167 @@
+@use "@/styles" as *;
+
+/* ================= MENU ITEM ================= */
+.menu__item {
+  position: relative;
+  padding-left: calc(var(--level, 0) * 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: visible;
+}
+
+.menu__item-wrapper {
+  position: relative;
+  display: flex;
+  border-radius: 6px;
+  color: $text-primary;
+  overflow: visible;
+
+  &:hover {
+    background: rgba($accent-primary-light, 0.5);
+    color: rgba($accent-primary, 0.6);
+  }
+
+  &.active {
+    color: $accent-primary;
+    background: $accent-primary-light;
+  }
+}
+
+.menu__sub {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+}
+
+/* ================= ITEM ================= */
+.item {
+  flex: 1;
+  padding: 9px;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.2s ease, color 0.2s ease;
+  @include flex(row, flex-start, center, 10px);
+
+  &__icon {
+    font-size: 20px;
+  }
+
+  &__content {
+    white-space: nowrap;
+  }
+}
+
+/* ================= TOOLTIP (COLLAPSED) ================= */
+.item__tooltip {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translate(8px, -50%);
+  opacity: 0;
+  pointer-events: none;
+
+  background: $bg-paper;
+  color: $text-primary;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid $border-default;
+  white-space: nowrap;
+  box-shadow: $shadow-sm;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 999;
+}
+
+/* ================= COLLAPSED MODE ================= */
+.menu__item.collapsed {
+  .item {
+    justify-content: center;
+  }
+
+  > .menu__item-wrapper:hover > .item__tooltip {
+    opacity: 1;
+    transform: translate(12px, -50%);
+    pointer-events: auto;
+  }
+}
+
+/* ================= DROPDOWN ================= */
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 0 6px 6px 0;
+
+  &__toggle {
+    width: 36px;
+    height: 100%;
+    cursor: pointer;
+    background: transparent;
+    color: $accent-primary-dark;
+    @include flex(row, center, center);
+    border-radius: 0 6px 6px 0;
+  }
+
+  &__icon {
+    font-size: 18px;
+    transition: transform 0.25s ease;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 180px;
+    background: $bg-paper;
+    border-radius: 8px;
+    border: 1px solid $border-default;
+    padding: 2px;
+    z-index: 100;
+    box-shadow: $shadow-sm;
+    animation: dropdownFade 0.2s ease;
+  }
+
+  &__item {
+    margin-top: 2px;
+
+    button {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      background: $bg-muted;
+      color: $text-primary;
+      white-space: nowrap;
+      transition: background 0.2s ease, color 0.2s ease;
+      @include flex(row, flex-start, center, 8px);
+
+      &:hover {
+        background: rgba($accent-primary-light, 0.5);
+        color: rgba($accent-primary, 0.6);
+      }
+
+      &.active {
+        background: $accent-primary-light;
+        color: $accent-primary;
+      }
+    }
+  }
+}
+
+/* ================= ANIMATION ================= */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

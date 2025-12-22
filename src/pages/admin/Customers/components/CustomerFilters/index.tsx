@@ -1,21 +1,16 @@
 import classNames from "classnames/bind";
 import styles from "./CustomerFilters.module.scss";
 import { Select } from "@/components/Select";
+import type { CustomerListParams } from "@/services/customerService";
 
 const cx = classNames.bind(styles);
 
-export interface Filters {
-  search: string;
-  dateFrom: string;
-  dateTo: string;
-  gender: string;
-  sortField: string;
-  sortOrder: string;
-}
-
 export interface CustomerFiltersProps {
-  filters: Filters;
-  onChange: (key: keyof Filters, value: string) => void;
+  filters: CustomerListParams;
+  onChange: (
+    key: keyof CustomerListParams,
+    value: string | number | undefined
+  ) => void;
   onClear: () => void;
 }
 
@@ -27,7 +22,7 @@ export function CustomerFilters({
   return (
     <div className={cx("customer-filters")}>
       <div className={cx("customer-filters__group")}>
-        {/* Search */}
+        {/* Keyword */}
         <div
           className={cx(
             "customer-filters__item",
@@ -36,8 +31,8 @@ export function CustomerFilters({
         >
           <input
             type="text"
-            value={filters.search}
-            onChange={(e) => onChange("search", e.target.value)}
+            value={filters.keyword || ""}
+            onChange={(e) => onChange("keyword", e.target.value)}
             placeholder="Tìm kiếm khách hàng..."
             className={cx("customer-filters__input")}
           />
@@ -52,15 +47,49 @@ export function CustomerFilters({
         >
           <input
             type="date"
-            value={filters.dateFrom}
-            onChange={(e) => onChange("dateFrom", e.target.value)}
+            value={filters.startDate || ""}
+            onChange={(e) => onChange("startDate", e.target.value)}
             className={cx("customer-filters__input")}
           />
           <span className={cx("customer-filters__label")}>đến</span>
           <input
             type="date"
-            value={filters.dateTo}
-            onChange={(e) => onChange("dateTo", e.target.value)}
+            value={filters.endDate || ""}
+            onChange={(e) => onChange("endDate", e.target.value)}
+            className={cx("customer-filters__input")}
+          />
+        </div>
+
+        {/* Amount */}
+        <div
+          className={cx(
+            "customer-filters__item",
+            "customer-filters__item--amount"
+          )}
+        >
+          <input
+            type="number"
+            value={filters.minAmount ?? ""}
+            onChange={(e) =>
+              onChange(
+                "minAmount",
+                e.target.value ? Number(e.target.value) : undefined
+              )
+            }
+            placeholder="Tối thiểu"
+            className={cx("customer-filters__input")}
+          />
+          <span className={cx("customer-filters__label")}>-</span>
+          <input
+            type="number"
+            value={filters.maxAmount ?? ""}
+            onChange={(e) =>
+              onChange(
+                "maxAmount",
+                e.target.value ? Number(e.target.value) : undefined
+              )
+            }
+            placeholder="Tối đa"
             className={cx("customer-filters__input")}
           />
         </div>
@@ -73,10 +102,12 @@ export function CustomerFilters({
           )}
         >
           <Select
-            value={filters.gender || "All"}
-            onChange={(v) => onChange("gender", v.toString())}
+            value={filters.gender || "OTHER"}
+            onChange={(v) =>
+              onChange("gender", v as CustomerListParams["gender"])
+            }
             options={[
-              { value: "All", label: "Tất cả" },
+              { value: "OTHER", label: "Tất cả" },
               { value: "MALE", label: "Nam" },
               { value: "FEMALE", label: "Nữ" },
             ]}
@@ -91,8 +122,8 @@ export function CustomerFilters({
           )}
         >
           <Select
-            value={filters.sortField || "name"}
-            onChange={(v) => onChange("sortField", v.toString())}
+            value={filters.sortBy || "name"}
+            onChange={(v) => onChange("sortBy", v)}
             options={[
               { value: "name", label: "Tên" },
               { value: "createdAt", label: "Ngày tạo" },
@@ -101,8 +132,8 @@ export function CustomerFilters({
             ]}
           />
           <Select
-            value={filters.sortOrder || "asc"}
-            onChange={(v) => onChange("sortOrder", v.toString())}
+            value={filters.sortDir || "asc"}
+            onChange={(v) => onChange("sortDir", v)}
             options={[
               { value: "asc", label: "Tăng dần" },
               { value: "desc", label: "Giảm dần" },
@@ -129,13 +160,7 @@ export function CustomerFilters({
         </div>
       </div>
 
-      <div className={cx("customer-filters__add")}>
-        <button
-          className={cx("customer-filters__btn", "customer-filters__btn--add")}
-        >
-          Thêm khách hàng
-        </button>
-      </div>
+      <div className={cx("customer-filters__add")}></div>
     </div>
   );
 }

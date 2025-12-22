@@ -1,7 +1,9 @@
+@use "@/styles" as *;
+
 .history {
   display: flex;
   height: 100%;
-  background: vars.$bg-default;
+  background: $bg-default;
   gap: 10px;
   overflow: hidden;
 }

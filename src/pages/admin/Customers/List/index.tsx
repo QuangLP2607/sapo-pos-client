@@ -2,8 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./Customers.module.scss";
-import { CustomerFilters, type Filters } from "../components/CustomerFilters";
-import customerApi, { type Customer } from "@/services/customerService1";
+import type { Customer } from "@/interfaces/customer";
+import { CustomerFilters } from "../components/CustomerFilters";
+import customerApi, {
+  type CustomerListParams,
+} from "@/services/customerService";
 import { PaginationControls } from "@/components/PaginationControls";
 import CustomerTable from "@/components/CustomerTable";
 
@@ -11,14 +14,17 @@ const cx = classNames.bind(styles);
 
 export default function Customers() {
   const navigate = useNavigate();
+
   // ===== Filters =====
-  const [filters, setFilters] = useState<Filters>({
-    search: "",
-    dateFrom: "",
-    dateTo: "",
-    gender: "All",
-    sortField: "name",
-    sortOrder: "asc",
+  const [filters, setFilters] = useState<CustomerListParams>({
+    keyword: "",
+    startDate: "",
+    endDate: "",
+    minAmount: undefined,
+    maxAmount: undefined,
+    gender: "NaN",
+    sortBy: "name",
+    sortDir: "asc",
   });
 
   // ===== State =====
@@ -28,44 +34,46 @@ export default function Customers() {
   const [total, setTotal] = useState(0);
 
   // ===== Handlers =====
-  const handleFilterChange = (key: keyof Filters, value: string) => {
+  const handleFilterChange = (
+    key: keyof CustomerListParams,
+    value: string | number | undefined
+  ) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
     setPage(1);
   };
 
   const handleClear = () => {
     setFilters({
-      search: "",
-      dateFrom: "",
-      dateTo: "",
-      gender: "All",
-      sortField: "name",
-      sortOrder: "asc",
+      keyword: "",
+      startDate: "",
+      endDate: "",
+      minAmount: undefined,
+      maxAmount: undefined,
+      gender: "NaN",
+      sortBy: "name",
+      sortDir: "asc",
     });
     setPage(1);
   };
 
-  // ===== Fetch API ====
+  // ===== Fetch API =====
   useEffect(() => {
     let isMounted = true;
 
     async function load() {
       try {
-        const res = await customerApi.getAll({
-          keyword: filters.search,
-          startDate: filters.dateFrom || undefined,
-          endDate: filters.dateTo || undefined,
-          sortBy: filters.sortField,
-          sortDir: filters.sortOrder,
-          gender: filters.gender !== "All" ? filters.gender : undefined,
+        const params: CustomerListParams & { page: number; size: number } = {
+          ...filters,
           page: page - 1,
           size,
-        });
+        };
+
+        const res = await customerApi.getCustomers(params);
 
         if (!isMounted) return;
 
-        setCustomers(res.data.customers || []);
-        setTotal(res.data.totalItems || 0);
+        setCustomers(res.customers || []);
+        setTotal(res.totalItems || 0);
       } catch {
         if (!isMounted) return;
         setCustomers([]);
@@ -83,6 +91,10 @@ export default function Customers() {
   // ===== Render =====
   return (
     <div className={cx("customer")}>
+      <div className={cx("customer__header")}>
+        <h2>Khách hàng</h2>
+        <button className={cx("customer__header--add")}>Thêm khách hàng</button>
+      </div>
       {/* Filter */}
       <CustomerFilters
         filters={filters}
@@ -90,19 +102,12 @@ export default function Customers() {
         onClear={handleClear}
       />
 
+      {/* Customer Table */}
       <CustomerTable
         columns={[
           { label: "Tên", render: (c) => c.name },
-          { label: "Số điện thoại", render: (c) => c.phoneNum },
-          { label: "Giới tính", render: (c) => c.gender },
-          { label: "Ghi chú", render: (c) => c.note },
-          {
-            label: "Ngày tạo",
-            render: (c) =>
-              c.createdAt
-                ? new Date(c.createdAt).toLocaleDateString("vi-VN")
-                : "-",
-          },
+          { label: "Điện thoại", render: (c) => c.phoneNum },
+          { label: "Đơn hàng", render: (c) => c.gender },
           {
             label: "Mua hàng gần nhất",
             render: (c) =>
@@ -111,7 +116,7 @@ export default function Customers() {
                 : "-",
           },
           {
-            label: "Tổng giao dịch",
+            label: "Tổng chi tiêu",
             render: (c) => c.totalPurchaseAmount?.toLocaleString("vi-VN") || 0,
           },
         ]}

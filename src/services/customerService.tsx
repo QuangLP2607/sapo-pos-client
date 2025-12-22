@@ -1,95 +1,56 @@
 import apiClient from "./apiClient";
-import type {
+import type { Customer, Gender } from "@/interfaces/customer";
+import type { ListParams, PaginatedResponse } from "@/interfaces/common";
+
+// ===== Types ================================================================
+export type CustomerListItem = Customer;
+
+export type UpdateCustomerPayload = Pick<
   Customer,
-  CustomerPayload,
-  CustomerQueryParams,
-  CustomerPageResponse,
-} from "@interfaces/customer";
-import type { MessageResponse } from "@interfaces/common";
+  "name" | "phoneNum" | "gender" | "note"
+>;
 
-// const fakeCustomers: Customer[] = [
-//   {
-//     id: "1",
-//     name: "Nguyễn Văn A",
-//     phoneNum: "0901234567",
-//     address: "Hà Nội",
-//     gender: "Nam",
-//     birthday: "1998-05-12",
-//   },
-//   {
-//     id: "2",
-//     name: "Trần Thị B",
-//     phoneNum: "0912345678",
-//     address: "TP Hồ Chí Minh",
-//     gender: "Nữ",
-//     birthday: "2000-08-20",
-//   },
-//   {
-//     id: "3",
-//     name: "Lê Minh C",
-//     phoneNum: "0923456789",
-//     address: "Đà Nẵng",
-//     gender: "Nam",
-//     birthday: "1995-02-10",
-//   },
-//   {
-//     id: "4",
-//     name: "Phạm Thị D",
-//     phoneNum: "0934567890",
-//     address: "Cần Thơ",
-//     gender: "Nữ",
-//     birthday: "1999-11-05",
-//   },
-// ];
+export interface CustomerListParams extends ListParams {
+  startDate?: string;
+  endDate?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  gender?: Gender;
+}
 
-// const customerApi = {
-//   getCustomers(query?: string): Promise<{ data: Customer[] }> {
-//     const q = query?.trim().toLowerCase() ?? "";
-
-//     const filtered = q
-//       ? fakeCustomers.filter(
-//           (c) =>
-//             c.name.toLowerCase().includes(q) ||
-//             c.phoneNum.toLowerCase().includes(q)
-//         )
-//       : fakeCustomers;
-
-//     return Promise.resolve({ data: filtered });
-//   },
-// };
-
+// ===== API ==================================================================
 const customerApi = {
-  // ===== Get all customers (with filters + pagination) =====
-  getAll(params: CustomerQueryParams) {
-    return apiClient.get<CustomerPageResponse>("/customers", { params });
+  async getCustomers(
+    params: CustomerListParams
+  ): Promise<PaginatedResponse<"customers", CustomerListItem>> {
+    const res = await apiClient.get<
+      PaginatedResponse<"customers", CustomerListItem>
+    >("customers", { params });
+    return res.data!;
   },
 
-  // ===== Add customer =====
-  add(payload: CustomerPayload) {
-    const formData = new FormData();
-    Object.entries(payload).forEach(([key, value]) =>
-      formData.append(key, value as string)
-    );
+  async getCustomerById(id: number): Promise<CustomerListItem> {
+    const res = await apiClient.get<CustomerListItem>(`customers/${id}`);
+    return res.data!;
+  },
 
-    return apiClient.post<MessageResponse>("/customers", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+  async createCustomer(
+    payload: UpdateCustomerPayload
+  ): Promise<CustomerListItem> {
+    const res = await apiClient.post<CustomerListItem>("customers", null, {
+      params: payload,
     });
+    return res.data!;
   },
 
-  // ===== Update customer =====
-  update(id: number, payload: CustomerPayload) {
-    const formData = new FormData();
-    Object.entries(payload).forEach(([key, value]) =>
-      formData.append(key, value as string)
-    );
-
-    return apiClient.put<MessageResponse>(`/customers/${id}`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+  async updateCustomer(
+    id: number,
+    payload: UpdateCustomerPayload
+  ): Promise<CustomerListItem> {
+    const res = await apiClient.put<CustomerListItem>(`customers/${id}`, null, {
+      params: payload,
     });
-  },
-
-  getById(id: number) {
-    return apiClient.get<Customer>(`/customers/${id}`);
+    return res.data!;
   },
 };
 
