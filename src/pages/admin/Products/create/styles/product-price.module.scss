@@ -1,0 +1,41 @@
+.wrapper {
+  border-radius: 6px;
+  background-color: vars.$bg-paper;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 1px,
+    rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;
+}
+
+.header {
+  padding: 20px 20px 0px;
+  h2 {
+    font-size: 16px;
+  }
+}
+
+.body {
+  padding: 20px;
+}
+
+.input-gap {
+  margin-bottom: 6px;
+}
+
+.sell-and-compare-price {
+  display: flex;
+  gap: 24px;
+}
+
+.base-price-and-blank {
+  display: flex;
+  gap: 24px;
+}
+
+.base-price-input {
+  flex: 1;
+}
+
+.blank-input {
+  min-width: 36px;
+  min-height: 36px;
+  flex: 1;
+}

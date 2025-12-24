@@ -1,0 +1,76 @@
+$primary-bg: #f3f4f5;
+$hover-btn: #747c87;
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-button {
+  @include mixins.button-base();
+  font-size: 20px;
+  padding: 7px;
+  border-radius: 6px;
+  background-color: vars.$bg-paper;
+  color: #a3a8af;
+  border: 1px solid #d3d5d7;
+
+  &:hover {
+    color: $hover-btn;
+    background-color: $primary-bg;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.header-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.header-right-btn {
+  font-size: 14px;
+  padding: 7px 16px;
+  min-width: 36px;
+  min-height: 36px;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  border: 1px solid vars.$accent-primary;
+  color: vars.$accent-primary;
+
+  &:hover {
+    background-color: #f2f9ff;
+    color: vars.$accent-primary;
+  }
+}
+
+.save-btn {
+  background-color: $primary-bg;
+  color: $hover-btn;
+  cursor: default;
+  border: none;
+}
+
+.active {
+  background-color: vars.$accent-primary;
+  color: vars.$bg-paper;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #33a0ff;
+    color: vars.$bg-paper;
+  }
+}

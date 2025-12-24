@@ -1,0 +1,33 @@
+$hover-btn-color: #33a0ff;
+
+.wrapper {
+  border-radius: 6px;
+  background-color: vars.$bg-paper;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 1px,
+    rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;
+}
+
+.header {
+  padding: 20px 20px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 16px;
+}
+
+.header-btn {
+  background-color: transparent;
+  color: vars.$accent-primary;
+  font-size: 14px;
+
+  &:hover {
+    text-decoration: underline;
+    color: $hover-btn-color;
+  }
+}
+
+.body {
+  padding: 20px;
+}

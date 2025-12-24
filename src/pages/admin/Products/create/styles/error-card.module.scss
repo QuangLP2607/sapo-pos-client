@@ -1,0 +1,52 @@
+$error-color: #ee4747;
+$hover-color: #747c87;
+$close-icon-color: #a3a8af;
+
+.card {
+  width: 100%;
+}
+
+.wrapper {
+  padding: 8px 16px;
+  border: 1px solid $error-color;
+  background-color: #fff6f6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+}
+
+.icon-message-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  font-size: 20px;
+}
+
+.error-icon {
+  color: $error-color;
+  display: flex;
+  padding-right: 8px;
+}
+
+.message-wrapper {
+  font-size: 14px;
+}
+
+.close-btn {
+  background: none;
+  cursor: pointer;
+  display: flex;
+}
+
+.close-icon {
+  font-size: 20px;
+  color: $close-icon-color;
+  display: flex;
+
+  &:hover {
+    color: $hover-color;
+  }
+}

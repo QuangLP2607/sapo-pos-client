@@ -1,0 +1,116 @@
+$primary-color: #0088ff;
+$border-color: #dbe1e8;
+$text-color: #46515f;
+$bg-hover: #f4f6f8;
+@use "sass:color";
+
+.dropdownWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  position: relative;
+  font-family: -apple-system, sans-serif;
+
+  .label {
+    font-size: 14px;
+    color: $text-color;
+  }
+
+  .control {
+    min-height: 40px;
+    padding: 4px 8px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.2s;
+    // font-weight: 500;
+    font-size: 16px;
+    color: black;
+
+    &:hover {
+      border-color: color.adjust($border-color, $lightness: -10%);
+    }
+    &.isOpen {
+      border-color: $primary-color;
+    }
+
+    .placeholder {
+      // color: #919eab;
+      color: black;
+      font-size: 16px;
+    }
+
+    .selectedValues {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 4px;
+      font-size: 14px;
+    }
+  }
+
+  .menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background: white;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 250px;
+    overflow-y: auto;
+
+    .option {
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &:hover {
+        background-color: $bg-hover;
+      }
+
+      &.selected {
+        color: $primary-color;
+        background-color: rgba($primary-color, 0.05);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Tag style in multi mode
+.tag {
+  background: #f0f2f4;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #e1e4e8;
+
+  .removeBtn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    color: #637381;
+    &:hover {
+      color: #ff4d4f;
+    }
+  }
+}

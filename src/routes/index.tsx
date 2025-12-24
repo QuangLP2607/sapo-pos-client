@@ -33,6 +33,7 @@ import SalesInventory from "@pages/sales/Inventory";
 // import WarehouseInventory from "@pages/warehouse/Inventory";
 
 import type { Role } from "@interfaces/common";
+import CreateProductPage from "@/pages/admin/Products/create";
 
 export interface RouteType {
   path: string;
@@ -90,6 +91,18 @@ const routes: RouteType[] = [
     layout: OwnerLayout,
     role: "OWNER",
   },
+  {
+    path: "/admin/products/create",
+    component: CreateProductPage,
+    layout: OwnerLayout,
+    role: "OWNER",
+  },
+  // {
+  //   path: "/admin/products/:id",
+  //   component: ,
+  //   layout: OwnerLayout,
+  //   role: "OWNER",
+  // },
   {
     path: "/admin/settings",
     component: AdminSettings,

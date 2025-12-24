@@ -1,0 +1,30 @@
+@mixin mobile {
+  @media (max-width: 1010px) {
+    @content;
+  }
+}
+
+.body {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.first-body-element {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 2;
+}
+
+.second-body-element {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}

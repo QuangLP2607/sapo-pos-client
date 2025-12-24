@@ -1,0 +1,25 @@
+$primary-bg: #f3f4f5;
+$hover-btn: #747c87;
+
+.wrapper {
+  padding: 0 32px;
+  width: 100%;
+  max-width: calc(1136px);
+}
+
+.body {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.first-body-element {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 2;
+}
+
+.second-body-element {
+  flex: 1;
+}
