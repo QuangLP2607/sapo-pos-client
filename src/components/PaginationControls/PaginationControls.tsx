@@ -21,25 +21,18 @@ export default function PaginationControls({
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
+        position: "relative",
         width: "100%",
+        height: "40px",
+        marginTop: "auto",
       }}
     >
-      {/* LEFT */}
-      <div style={{ flex: 1 }}>
-        <ItemsPerPageSelector
-          itemsPerPage={itemsPerPage}
-          onItemsPerPageChange={onItemsPerPageChange}
-        />
-      </div>
-
       {/* CENTER */}
       <div
         style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
         }}
       >
         <Pagination
@@ -49,8 +42,13 @@ export default function PaginationControls({
         />
       </div>
 
-      {/* RIGHT*/}
-      <div style={{ flex: 1 }}></div>
+      {/* RIGHT */}
+      <div style={{ position: "absolute", right: 0 }}>
+        <ItemsPerPageSelector
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+        />
+      </div>
     </div>
   );
 }

@@ -7,8 +7,8 @@ import {
   Routes,
 } from "react-router-dom";
 
-import { AuthProvider } from "@contexts/AuthContext";
-import { SalesTabsProvider } from "@contexts/SalesTabsContext";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { SalesTabsProvider } from "@/contexts/SalesTabsContext";
 import { AuthRoute } from "./routes/AuthRoute";
 import routes from "./routes";
 
@@ -41,6 +41,7 @@ function AppRouter() {
                 route.layout,
                 route.layoutProps
               )}
+              role={route.role}
             />
           }
         />

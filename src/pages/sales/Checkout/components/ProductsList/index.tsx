@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ProductsList.module.scss";
-import type { Order } from "@interfaces/order";
-import type { Product } from "@interfaces/product";
+import type { Order } from "@/interfaces/order";
+import type { Product } from "@/interfaces/product";
 import { Icon } from "@iconify/react";
 
 const cx = classNames.bind(styles);

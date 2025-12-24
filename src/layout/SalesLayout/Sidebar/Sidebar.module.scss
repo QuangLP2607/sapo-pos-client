@@ -1,8 +1,10 @@
+@use "@/styles" as *;
+
 .sidebar {
   height: 100%;
   padding: 28px 12px;
-  background-color: vars.$bg-paper;
-  @include mixins.flex(column, flex-start, center);
+  background-color: $bg-paper;
+  @include flex(column, flex-start, center);
 }
 
 .menu {
@@ -14,30 +16,30 @@
   &__item {
     width: 50px;
     height: 50px;
-    @include mixins.flex(column, center, center);
+    @include flex(column, center, center);
     border-radius: 8px;
     cursor: pointer;
     transition: 0.2s;
 
     &-icon {
       font-size: 24px;
-      color: vars.$text-tertiary;
+      color: $text-tertiary;
       transition: color 0.2s;
     }
 
     &:hover {
-      background-color: rgba(vars.$accent-primary-light, 0.5);
+      background-color: rgba($accent-primary-light, 0.5);
 
       .menu__item-icon {
-        color: rgba(vars.$accent-primary, 0.5);
+        color: rgba($accent-primary, 0.5);
       }
     }
 
     &.active {
-      background-color: vars.$accent-primary-light;
+      background-color: $accent-primary-light;
 
       .menu__item-icon {
-        color: vars.$accent-primary;
+        color: $accent-primary;
       }
     }
 
@@ -45,18 +47,18 @@
       margin-top: auto;
 
       &:hover {
-        background-color: rgba(vars.$error, 0.1);
+        background-color: rgba($error, 0.1);
 
         .menu__item-icon {
-          color: rgba(vars.$error, 0.6);
+          color: rgba($error, 0.6);
         }
       }
 
       &:active {
-        background-color: rgba(vars.$error, 0.2);
+        background-color: rgba($error, 0.2);
 
         .menu__item-icon {
-          color: vars.$error;
+          color: $error;
         }
       }
     }

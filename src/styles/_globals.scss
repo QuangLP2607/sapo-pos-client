@@ -1,27 +1,37 @@
-@use "./variables" as vars;
+@use "./variables" as *;
 
+// Global Reset
 * {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
 html {
   font-size: 62.5%;
-  font-family: vars.$font-primary;
 }
 
 body {
-  background-color: vars.$bg-default;
-  color: vars.$text-primary;
+  background-color: $bg-default;
+  color: $text-primary;
   font-size: 1.4rem;
+  font-family: $font-primary;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  > * {
+    flex: 1;
+  }
+}
+
+//-------- Reset styles for common elements --------
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 ul {
@@ -41,10 +51,10 @@ select {
   outline: none;
 }
 
-/* Áp dụng cho mọi scrollbar trong toàn web */
+// ------------ Custom Scrollbar ------------
 * {
-  scrollbar-width: thin; // Firefox
   scrollbar-color: #c1c1c1 transparent;
+  scrollbar-width: thin;
 }
 
 *::-webkit-scrollbar {
@@ -56,8 +66,8 @@ select {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #c1c1c1;
   border-radius: 4px;
+  background-color: #c1c1c1;
 }
 
 *::-webkit-scrollbar-thumb:hover {

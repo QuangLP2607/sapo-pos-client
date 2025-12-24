@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import classNames from "classnames/bind";
-import AdminFooter from "./Footer";
-import AdminHeader from "./Header";
-import AdminSidebar from "./Sidebar";
+import OwnerFooter from "./Footer";
+import OwnerHeader from "./Header";
+import OwnerSidebar from "./Sidebar";
 import styles from "./OwnerLayout.module.scss";
 
 const cx = classNames.bind(styles);
@@ -22,17 +22,24 @@ const OwnerLayout = ({
 }: OwnerLayoutProps) => {
   return (
     <div className={cx("wrapper")}>
-      {showSidebar && <AdminSidebar />}
+      <div className={cx("wrapper--sidebar")}>
+        {showSidebar && <OwnerSidebar />}
+      </div>
 
       <div className={cx("wrapper__content")}>
-        {showHeader && <AdminHeader />}
+        {showHeader && (
+          <div className={cx("wrapper__content--header")}>
+            <OwnerHeader />
+          </div>
+        )}
 
-        {/* Main layout container */}
-        <div className={cx("mainContainer")}>
-          <main className={cx("main")}>{children}</main>
-        </div>
+        <main className={cx("wrapper__content--main")}>{children}</main>
 
-        {showFooter && <AdminFooter />}
+        {showFooter && (
+          <div className={cx("wrapper__content--footer")}>
+            <OwnerFooter />
+          </div>
+        )}
       </div>
     </div>
   );

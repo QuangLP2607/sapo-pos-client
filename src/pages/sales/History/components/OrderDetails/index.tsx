@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./OrderDetails.module.scss";
-import type { Order } from "@interfaces/order";
+import type { Order } from "@/interfaces/order";
 import { Icon } from "@iconify/react";
 
 interface OrderDetailsProps {

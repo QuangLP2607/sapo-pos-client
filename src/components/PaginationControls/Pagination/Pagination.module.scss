@@ -1,3 +1,5 @@
+@use "@/styles" as *;
+
 .pagination {
   display: flex;
   align-items: center;
@@ -11,17 +13,17 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid vars.$border-default;
-  background: vars.$bg-paper;
+  border: 1px solid $border-default;
+  background: $bg-paper;
   border-radius: 6px;
   cursor: pointer;
-  color: vars.$text-primary;
+  color: $text-primary;
   transition: all 0.2s;
 
   &:hover:not(.disabled) {
-    background: vars.$bg-muted;
-    border-color: vars.$accent-primary;
-    color: vars.$accent-primary;
+    background: $bg-muted;
+    border-color: $accent-primary;
+    color: $accent-primary;
   }
 
   &.disabled {
@@ -44,11 +46,11 @@
   min-width: 36px;
   height: 36px;
   padding: 0 8px;
-  border: 1px solid vars.$border-default;
-  background: vars.$bg-paper;
+  border: 1px solid $border-default;
+  background: $bg-paper;
   border-radius: 6px;
   cursor: pointer;
-  color: vars.$text-primary;
+  color: $text-primary;
   font-size: 14px;
   transition: all 0.2s;
   display: flex;
@@ -56,22 +58,21 @@
   justify-content: center;
 
   &:hover {
-    background: vars.$bg-muted;
-    border-color: vars.$accent-primary;
-    color: vars.$accent-primary;
+    background: $bg-muted;
+    border-color: $accent-primary;
+    color: $accent-primary;
   }
 
   &.active {
-    background: vars.$accent-primary;
-    border-color: vars.$accent-primary;
-    color: vars.$text-inverse;
+    background: $accent-primary;
+    border-color: $accent-primary;
+    color: $text-inverse;
     font-weight: 600;
   }
 }
 
 .pagination__ellipsis {
   padding: 0 4px;
-  color: vars.$text-tertiary;
+  color: $text-tertiary;
   font-size: 14px;
 }
-

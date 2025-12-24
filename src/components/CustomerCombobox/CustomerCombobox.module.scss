@@ -1,12 +1,14 @@
+@use "@/styles" as *;
+
 .cbx {
   position: relative;
   display: flex;
   width: 400px;
-  background-color: vars.$bg-muted;
+  background-color: $bg-muted;
   border-radius: 5px;
-  border: 1px solid vars.$border-default;
+  border: 1px solid $border-default;
   padding: 4px;
-  @include mixins.flex(row, start, center, 10px);
+  @include flex(row, start, center, 10px);
 
   &__icon {
     margin-left: 5px;
@@ -26,31 +28,31 @@
     width: 100%;
     top: 105%;
     left: 0;
-    background: vars.$bg-default;
-    border: 1px solid vars.$border-default;
+    background: $bg-default;
+    border: 1px solid $border-default;
     border-radius: 6px;
     padding: 6px 0;
     max-height: 220px;
     overflow-y: auto;
     z-index: 10;
-    box-shadow: vars.$shadow-md;
+    box-shadow: $shadow-md;
   }
 
   &__item {
-    background: vars.$bg-muted;
+    background: $bg-muted;
     padding: 8px 12px;
     cursor: pointer;
 
     &:hover {
-      background: vars.$bg-paper;
+      background: $bg-paper;
     }
   }
 
   &__add {
-    @include mixins.flex(row, center, center);
+    @include flex(row, center, center);
     padding: 8px;
-    border-left: 1px solid vars.$accent-primary;
-    color: vars.$accent-primary;
+    border-left: 1px solid $accent-primary;
+    color: $accent-primary;
     transition: all 0.2s ease;
     user-select: none;
     cursor: pointer;
@@ -67,6 +69,6 @@
   &__no-data {
     padding: 8px 12px;
     text-align: center;
-    color: vars.$text-secondary;
+    color: $text-secondary;
   }
 }

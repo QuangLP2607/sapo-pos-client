@@ -1,6 +1,8 @@
+@use "@/styles" as *;
+
 .products {
   flex: 3;
-  background-color: vars.$bg-paper;
+  background-color: $bg-paper;
   padding: 20px;
   border-radius: 8px;
 }
@@ -12,7 +14,7 @@
   th,
   td {
     padding: 10px;
-    border-bottom: 1px solid vars.$border-default;
+    border-bottom: 1px solid $border-default;
   }
 
   &-cell {
@@ -25,7 +27,7 @@
       height: 40px;
       border-radius: 6px;
       object-fit: cover;
-      border: 1px solid vars.$border-default;
+      border: 1px solid $border-default;
     }
 
     .info {

@@ -1,7 +1,9 @@
+@use "@/styles" as *;
+
 .order {
   height: 100%;
   flex: 1;
-  background-color: vars.$bg-paper;
+  background-color: $bg-paper;
   border-radius: 8px;
   padding: 20px;
   display: flex;
@@ -9,7 +11,7 @@
   gap: 30px;
 
   &__invoice {
-    @include mixins.flex(column, space-between, start, 10px);
+    @include flex(column, space-between, start, 10px);
 
     &-line {
       width: 100%;
@@ -18,7 +20,7 @@
 
       &.total {
         padding: 4px 0;
-        border-top: 1px solid vars.$border-default;
+        border-top: 1px solid $border-default;
       }
     }
   }
@@ -32,7 +34,7 @@
       border-radius: 8px;
 
       &:focus-visible {
-        outline: 1px solid vars.$accent-primary;
+        outline: 1px solid $accent-primary;
       }
     }
   }
@@ -49,7 +51,7 @@
     }
 
     .pay {
-      @include mixins.button-base();
+      @include button-base();
       width: 100%;
       padding: 20px;
       border-radius: 8px;

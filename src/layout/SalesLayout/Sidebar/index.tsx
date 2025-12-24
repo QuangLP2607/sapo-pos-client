@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
-import ConfirmModal from "@components/ConfirmModal";
+import ConfirmModal from "@/components/ConfirmModal";
 
 const cx = classNames.bind(styles);
 

@@ -1,32 +1,81 @@
-.items-per-page {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+@use "@/styles" as *;
 
-.items-per-page__label {
-  font-size: 13px;
-  color: vars.$text-secondary;
-  white-space: nowrap;
-}
+.dropdown {
+  position: relative;
+  @include flex(row, center, center, 5px);
+  width: 120px;
 
-.items-per-page__select {
-  padding: 6px 10px;
-  border: 1px solid vars.$border-default;
-  border-radius: 6px;
-  background: vars.$bg-paper;
-  color: vars.$text-primary;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:focus {
-    border-color: vars.$accent-primary;
-    outline: none;
+  @keyframes fadeIn {
+    from {
+      transform: translateY(-4px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
-  &:hover {
-    border-color: vars.$accent-primary;
+  &__label {
+    white-space: nowrap;
+  }
+
+  &__control {
+    padding: 8px 12px;
+    border: 1px solid $border-default;
+    color: $text-primary;
+    border-radius: 4px;
+    background-color: $bg-paper;
+    cursor: pointer;
+    width: 70px;
+    user-select: none;
+    @include flex(row, space-between, center);
+
+    &:focus {
+      border: 1px solid $border-focus;
+    }
+
+    &__arrow {
+      transition: transform 0.2s ease;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    padding: 1px;
+    border: 1px solid $border-default;
+    border-radius: 4px;
+    background: $bg-paper;
+    box-shadow: $shadow-sm;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  &.up &__menu {
+    top: auto;
+    bottom: calc(100% + 4px);
+  }
+
+  &__item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: $bg-muted;
+    }
+
+    &.selected {
+      background-color: $gray-200;
+      color: $text-primary;
+    }
   }
 }
-

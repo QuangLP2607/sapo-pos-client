@@ -2,11 +2,11 @@ import { useState, useCallback, useMemo } from "react";
 import classNames from "classnames/bind";
 import styles from "./OrderInfo.module.scss";
 
-import type { Order } from "@interfaces/order";
-import type { Customer } from "@interfaces/customer";
+import type { Order } from "@/interfaces/order";
+import type { Customer } from "@/interfaces/customer";
 
 import CustomerCombobox from "@/components/CustomerCombobox";
-import customerApi from "@services/customerService";
+import customerApi from "@/services/customerService";
 import printService from "@/services/printService";
 import { useDebouncedSearch } from "@/hooks/useDebounce";
 import { useSalesTabs } from "@/hooks/useSalesTabs";

@@ -1,13 +1,15 @@
+@use "@/styles" as *;
+
 .footer {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 16px 0;
-  background: vars.$bg-paper;
-  color: vars.$text-secondary;
+  background: $bg-paper;
+  color: $text-secondary;
   text-align: center;
-  border-top: 1px solid vars.$border-default;
+  border-top: 1px solid $border-default;
 
   &__content {
     display: flex;

@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "variables" as vars;
+@use "variables" as *;
 
 // ==================== FLEX ====================
 @mixin flex($direction: row, $justify: center, $align: center, $gap: 0) {
@@ -21,7 +21,7 @@
   width: $size;
   height: $size;
   border-radius: 999px;
-  border: 1px solid vars.$border-default;
+  border: 1px solid $border-default;
 
   display: flex;
   justify-content: center;
@@ -31,34 +31,37 @@
 // ==================== CENTER ABSOLUTE ====================
 @mixin input-base() {
   width: 100%;
-  border: 1px solid vars.$border-default;
+  border: 1px solid $border-default;
   border-radius: 5px;
   padding: 10px;
 
   &:focus {
     outline: none;
-    border-color: vars.$border-focus;
-    box-shadow: 0 0 0 2px vars.$accent-primary-light;
+    border-color: $border-focus;
+    box-shadow: 0 0 0 2px $accent-primary-light;
   }
 }
 
-@mixin button-base(
-  $bg-color: vars.$accent-primary,
-  $text-color: vars.$text-inverse
-) {
+@mixin button-base($bg-color: $accent-primary, $text-color: $text-inverse) {
   border-radius: 5px;
   background-color: $bg-color;
   color: $text-color;
   padding: 8px 12px;
   cursor: pointer;
-  font-weight: 500;
+
   transition: background-color 0.2s, color 0.2s;
 
+  &:focus-visible {
+    outline: 2px solid $accent-primary;
+  }
+
   &:hover {
+    filter: brightness(0.97);
     background-color: color.scale($bg-color, $lightness: -5%);
   }
 
   &:active {
+    transform: scale(0.97);
     background-color: color.scale($bg-color, $lightness: 5%);
   }
 }

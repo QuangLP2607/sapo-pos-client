@@ -1,6 +1,8 @@
+@use "@/styles" as *;
+
 .product-list {
   width: 100%;
-  background: vars.$bg-paper;
+  background: $bg-paper;
   border-radius: 12px;
   padding: 20px;
   display: flex;
@@ -19,24 +21,24 @@
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: vars.$text-primary;
+    color: $text-primary;
     margin: 0;
   }
 
   &__search {
     padding: 0 12px;
     border-radius: 8px;
-    border: 1px solid vars.$border-default;
+    border: 1px solid $border-default;
     display: flex;
     align-items: center;
 
     &:focus-within {
-      border-color: vars.$accent-primary;
+      border-color: $accent-primary;
     }
 
     .search-icon {
       font-size: 20px;
-      color: vars.$text-secondary;
+      color: $text-secondary;
     }
 
     .search-input {
@@ -53,7 +55,7 @@
 
   &__results-count {
     font-size: 13px;
-    color: vars.$text-secondary;
+    color: $text-secondary;
     margin-bottom: 16px;
   }
 
@@ -68,7 +70,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: vars.$border-default;
+      background: $border-default;
       border-radius: 6px;
     }
   }
@@ -82,20 +84,20 @@
     padding: 12px;
     text-align: left;
     font-weight: 600;
-    color: vars.$text-primary;
-    border-bottom: 2px solid vars.$border-default;
-    background: vars.$bg-muted;
+    color: $text-primary;
+    border-bottom: 2px solid $border-default;
+    background: $bg-muted;
     position: sticky;
     top: 0;
     z-index: 1;
   }
 
   &__row {
-    border-bottom: 1px solid vars.$border-default;
+    border-bottom: 1px solid $border-default;
     transition: background 0.15s;
 
     &:hover {
-      background: vars.$bg-muted;
+      background: $bg-muted;
     }
 
     &:last-child {
@@ -105,7 +107,7 @@
 
   &__td {
     padding: 12px;
-    color: vars.$text-primary;
+    color: $text-primary;
     font-size: 14px;
 
     &--name {
@@ -114,7 +116,7 @@
 
     &--empty {
       text-align: center;
-      color: vars.$text-tertiary;
+      color: $text-tertiary;
       padding: 40px;
     }
   }
@@ -124,7 +126,7 @@
     height: 50px;
     object-fit: cover;
     border-radius: 6px;
-    border: 1px solid vars.$border-default;
+    border: 1px solid $border-default;
   }
 
   &__image-placeholder {
@@ -133,22 +135,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: vars.$bg-muted;
+    background: $bg-muted;
     border-radius: 6px;
-    border: 1px solid vars.$border-default;
+    border: 1px solid $border-default;
     font-size: 11px;
-    color: vars.$text-tertiary;
+    color: $text-tertiary;
   }
 
   &__loading {
     text-align: center;
-    color: vars.$text-secondary;
+    color: $text-secondary;
     padding: 40px;
   }
 
   &__pagination {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid vars.$border-default;
+    border-top: 1px solid $border-default;
   }
 }

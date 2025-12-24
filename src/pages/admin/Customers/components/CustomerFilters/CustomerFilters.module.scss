@@ -1,55 +1,106 @@
-.customer-filters {
+@use "@/styles" as *;
+
+@use "@/styles" as *;
+
+.filters {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-radius: 12px;
+  gap: 12px;
+  position: relative;
 
-  &__group {
-    display: flex;
-    border: 1px dashed vars.$border-default;
-    border-radius: 8px;
-    background-color: vars.$bg-default;
-  }
-
-  &__item {
+  &__search {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-left: 1px dashed vars.$border-default;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: $bg-default;
+    border: 1px solid $border-default;
 
-    &:first-child {
-      border-left: none;
+    input {
+      border: none;
+      outline: none;
+      background: transparent;
+      min-width: 240px;
+      font-size: 14px;
     }
-
-    // &--search,
-    // &--date,
-    // &--gender,
-    // &--sort,
-    // &--actions {
-    // }
   }
 
-  &__input {
-    padding: 6px 10px;
-    border: 1px solid vars.$border-default;
-    border-radius: 4px;
-    color: vars.$text-secondary;
-  }
-
-  &__btn {
-    padding: 6px 14px;
-    border-radius: 4px;
-    border: none;
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid $border-default;
+    background: white;
     cursor: pointer;
-    transition: background 0.2s;
+  }
 
-    &--clear {
-      @include mixins.button-base(vars.$gray-500);
+  &__panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 420px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    z-index: 20;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 90px 1fr auto 1fr;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+
+    label {
+      font-size: 13px;
+      color: $text-secondary;
     }
 
-    &--add {
-      @include mixins.button-base();
+    input {
+      padding: 6px 10px;
+      border: 1px solid $border-default;
+      border-radius: 6px;
     }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+  }
+}
+
+.sort-dir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid $border-default;
+  background: white;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &--ghost {
+    background: transparent;
+    border: 1px solid $border-default;
+  }
+
+  &--primary {
+    background: $accent-primary;
+    color: white;
+    border: none;
   }
 }

@@ -1,28 +1,28 @@
 import type { ReactElement, ReactNode } from "react";
 
 // Layouts
-import SalesLayout from "@layout/SalesLayout";
-import OwnerLayout from "@layout/OwnerLayout";
+import SalesLayout from "@/layout/SalesLayout";
+import OwnerLayout from "@/layout/OwnerLayout";
 
 // Pages
-import Login from "@pages/auth/Login";
+import Login from "@/pages/auth/Login";
 
 // Admin pages
-import AdminHome from "@pages/admin/Home";
-import AdminCustomersList from "@pages/admin/Customers/List";
-import AdminCustomerDetail from "@pages/admin/Customers/Detail";
-import AdminStaffs from "@pages/admin/Staffs";
-import AdminWarehouse from "@pages/admin/Warehouse";
-import AdminProducts from "@pages/admin/Products";
-import AdminSettings from "@pages/admin/SettingsPage";
-// import AdminReportSales from "@pages/admin/reports/Sales";
-// import AdminReportCustomers from "@pages/admin/reports/Customers";
-// import AdminReportOrders from "@pages/admin/reports/Orders";
+import AdminHome from "@/pages/admin/Home";
+import AdminCustomersList from "@/pages/admin/Customers/List";
+import AdminCustomerDetail from "@/pages/admin/Customers/Detail";
+import AdminStaffs from "@/pages/admin/Staffs";
+// import AdminWarehouse from "@/pages/admin/Warehouse";
+// import AdminProducts from "@/pages/admin/Products";
+// import AdminSettings from "@/pages/admin/SettingsPage";
+// import AdminReportSales from "@/pages/admin/reports/Sales";
+// import AdminReportCustomers from "@/pages/admin/reports/Customers";
+// import AdminReportOrders from "@/pages/admin/reports/Orders";
 
 // Sales pages
-import SalesCheckout from "@pages/sales/Checkout";
-import SalesHistory from "@pages/sales/History";
-import SalesInventory from "@pages/sales/Inventory";
+import SalesCheckout from "@/pages/sales/Checkout";
+import SalesHistory from "@/pages/sales/History";
+import SalesInventory from "@/pages/sales/Inventory";
 
 // Support pages
 // import SupportHome from "@pages/support/Home";
@@ -62,53 +62,41 @@ const routes: RouteType[] = [
     role: "OWNER",
   },
   {
-    path: "/admin/customers",
+    path: "/admin/users/customers",
     component: AdminCustomersList,
     layout: OwnerLayout,
     role: "OWNER",
   },
   {
-    path: "/admin/customers/:id",
+    path: "/admin/users/customers/:id",
     component: AdminCustomerDetail,
     layout: OwnerLayout,
     role: "OWNER",
   },
   {
-    path: "/admin/staffs",
+    path: "/admin/users/staffs",
     component: AdminStaffs,
     layout: OwnerLayout,
     role: "OWNER",
   },
-  {
-    path: "/admin/warehouse",
-    component: AdminWarehouse,
-    layout: OwnerLayout,
-    role: "OWNER",
-  },
-  {
-    path: "/admin/products",
-    component: AdminProducts,
-    layout: OwnerLayout,
-    role: "OWNER",
-  },
-  {
-    path: "/admin/products/create",
-    component: CreateProductPage,
-    layout: OwnerLayout,
-    role: "OWNER",
-  },
   // {
-  //   path: "/admin/products/:id",
-  //   component: ,
+  //   path: "/admin/warehouse",
+  //   component: AdminWarehouse,
   //   layout: OwnerLayout,
   //   role: "OWNER",
   // },
-  {
-    path: "/admin/settings",
-    component: AdminSettings,
-    layout: OwnerLayout,
-    role: "OWNER",
-  },
+  // {
+  //   path: "/admin/products",
+  //   component: AdminProducts,
+  //   layout: OwnerLayout,
+  //   role: "OWNER",
+  // },
+  // {
+  //   path: "/admin/settings",
+  //   component: AdminSettings,
+  //   layout: OwnerLayout,
+  //   role: "OWNER",
+  // },
 
   // Admin Reports
   // {

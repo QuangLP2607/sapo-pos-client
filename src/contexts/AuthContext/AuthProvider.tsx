@@ -1,6 +1,6 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import userApi from "@services/userService";
-import type { User } from "@interfaces/user";
+import userApi from "@/services/userService";
+import type { User } from "@/interfaces/user";
 import { AuthContext } from "./AuthContext";
 
 interface Props {
@@ -35,12 +35,8 @@ export const AuthProvider = ({ children }: Props) => {
     setIsLoading(true);
     try {
       const res = await userApi.getProfile();
-      const fetchedUser = res.data;
-
-      if ("username" in fetchedUser) {
-        setUser(fetchedUser);
-        localStorage.setItem("user", JSON.stringify(fetchedUser));
-      }
+      setUser(res);
+      localStorage.setItem("user", JSON.stringify(res));
     } catch (err) {
       console.error(" Cannot fetch profile:", err);
       logout();
