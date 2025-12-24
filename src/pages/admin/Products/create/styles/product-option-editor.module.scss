@@ -1,0 +1,73 @@
+@use "@/styles" as *;
+.header {
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgb(232, 234, 235);
+}
+
+.wrapper {
+  display: flex;
+  gap: 24px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.left {
+  max-width: 30%;
+  width: -webkit-fill-available;
+}
+
+.right {
+  width: -webkit-fill-available;
+}
+
+.child {
+  margin-top: 16px;
+  display: flex;
+  gap: 24px;
+}
+
+.delete-btn {
+  background-color: transparent;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #747c87;
+  }
+}
+
+.trash-icon {
+  font-size: 20px;
+  color: #a3a8af;
+}
+
+.add-option-wrapper {
+  margin-top: 16px;
+}
+
+.add-option-btn {
+  background-color: transparent;
+  color: $accent-primary;
+  display: flex;
+  align-items: center;
+  &:hover {
+    color: rgb(51, 160, 255);
+    .add-icon-text {
+      text-decoration: underline;
+    }
+  }
+}
+
+.add-icon {
+  font-size: 20px;
+  display: flex;
+}
+
+.add-icon-text {
+  display: flex;
+  margin-left: 4px;
+}

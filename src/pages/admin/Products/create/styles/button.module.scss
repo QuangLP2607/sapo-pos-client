@@ -1,0 +1,43 @@
+$hover-btn: #747c87;
+$primary-bg: #f3f4f5;
+@use "@/styles" as *;
+
+.button {
+  font-size: 14px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  background-color: $bg-paper;
+  color: #a3a8af;
+  border: 1px solid #d3d5d7;
+  min-width: 36px;
+  min-height: 36px;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  border: 1px solid $accent-primary;
+  color: $accent-primary;
+
+  &:hover {
+    background-color: #f2f9ff;
+    color: $accent-primary;
+  }
+}
+
+.save-btn {
+  background-color: $primary-bg;
+  color: $hover-btn;
+  cursor: default;
+  border: none;
+}
+
+.active {
+  background-color: $accent-primary;
+  color: $bg-paper;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #33a0ff;
+    color: $bg-paper;
+  }
+}

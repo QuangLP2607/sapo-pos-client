@@ -1,0 +1,37 @@
+@use "@/styles" as *;
+
+.input-gap {
+  margin-bottom: 6px;
+}
+
+.sku-and-barcode {
+  display: flex;
+  gap: 24px;
+}
+
+.unit-and-blank {
+  display: flex;
+  gap: 24px;
+}
+
+.unit-input {
+  flex: 1;
+}
+
+.blank-input {
+  min-width: 36px;
+  min-height: 36px;
+  flex: 1;
+}
+
+.add-summary {
+  background-color: transparent;
+  padding: 6px 0;
+  color: $accent-primary;
+  font-size: 14px;
+
+  &:hover {
+    color: #33a0ff;
+    text-decoration: underline;
+  }
+}

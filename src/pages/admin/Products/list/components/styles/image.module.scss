@@ -1,0 +1,91 @@
+@use "sass:color";
+@use "@/styles" as *;
+// Colors
+$bg-light: $bg-paper;
+$border-color: #e5e7eb;
+$error-text: #6b7280;
+$icon-color: #9ca3af;
+
+// Image Container
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background-color: $bg-light;
+  padding: 24px;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid $border-color;
+  overflow: hidden;
+}
+
+// Loading Skeleton
+.image-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    $bg-light 0%,
+    color.adjust($bg-light, $lightness: 5%) 50%,
+    $bg-light 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Image Element
+.image-element {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+
+  &.hidden {
+    display: none;
+  }
+
+  &.visible {
+    display: block;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Fallback State
+.image-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $bg-hover 0%, $bg-light 100%);
+  border-radius: 8px;
+  border: 2px dashed $border-color;
+  padding: 24px;
+}
+
+.fallback-icon {
+  color: $icon-color;
+}
+
+.fallback-text {
+  font-size: 14px;
+  color: $error-text;
+  font-weight: 500;
+  margin: 0;
+}

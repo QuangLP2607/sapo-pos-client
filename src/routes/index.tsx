@@ -32,7 +32,10 @@ import SalesInventory from "@/pages/sales/Inventory";
 // import WarehouseHome from "@pages/warehouse/Home";
 // import WarehouseInventory from "@pages/warehouse/Inventory";
 
-import type { Role } from "@/interfaces/common";
+import type { Role } from "@interfaces/common";
+import CreateProductPage from "@/pages/admin/Products/create";
+import Products from "@/pages/admin/Products";
+import ProductDetails from "@/pages/admin/Products/details";
 
 export interface RouteType {
   path: string;
@@ -84,12 +87,24 @@ const routes: RouteType[] = [
   //   layout: OwnerLayout,
   //   role: "OWNER",
   // },
-  // {
-  //   path: "/admin/products",
-  //   component: AdminProducts,
-  //   layout: OwnerLayout,
-  //   role: "OWNER",
-  // },
+  {
+    path: "/admin/products",
+    component: Products,
+    layout: OwnerLayout,
+    role: "OWNER",
+  },
+  {
+    path: "/admin/products/:productId",
+    component: ProductDetails,
+    layout: OwnerLayout,
+    role: "OWNER",
+  },
+  {
+    path: "/admin/products/create",
+    component: CreateProductPage,
+    layout: OwnerLayout,
+    role: "OWNER",
+  },
   // {
   //   path: "/admin/settings",
   //   component: AdminSettings,
