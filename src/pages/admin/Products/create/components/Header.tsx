@@ -10,9 +10,10 @@ export interface HeaderProps {
   title: string;
   handleSave: (data: any) => void;
   handleCancel: () => void;
+  isSaved?: boolean;
 }
 
-const Header = ({ title, handleSave, handleCancel }: HeaderProps) => {
+const Header = ({ title, handleSave, handleCancel, isSaved }: HeaderProps) => {
   return (
     <header className={cx("header-wrapper")}>
       <div className={cx("header-left")}>
@@ -25,7 +26,7 @@ const Header = ({ title, handleSave, handleCancel }: HeaderProps) => {
       </div>
       <div className={cx("header-right")}>
         <CancelButton onCancel={handleCancel} />
-        <SaveButton onSave={handleSave} />
+        <SaveButton isActive={isSaved} onSave={handleSave} />
       </div>
     </header>
   );

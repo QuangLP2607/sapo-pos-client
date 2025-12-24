@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 
 const cx = classNames.bind(styles);
 
-interface Option {
+export interface Option {
   label: string;
   value: string | number;
 }

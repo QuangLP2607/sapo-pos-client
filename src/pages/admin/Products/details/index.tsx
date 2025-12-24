@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames/bind";
-import Header from "./components/Header";
-import Body from "./components/Body";
-import Footer from "./components/Footer";
-import styles from "./styles/add-product.module.scss";
+import Header from "../create/components/Header";
+import Body from "../create/components/Body";
+import Footer from "../create/components/Footer";
+import styles from "../create/styles/add-product.module.scss";
 import Loading from "@/components/Loading/Loading";
 import ConfirmModal from "@/components/ConfirmModal";
 import { type ProductCreateRequest } from "../api/product.request";
 import productApi from "../api/api";
+import { type ProductResponse } from "../api/product.responses";
 
 const cx = classNames.bind(styles);
 
-const CreateProductPage = () => {
+const ProductDetails = () => {
+  const { productId } = useParams();
+
   const userJSON = localStorage.getItem("user") || "";
   const userId = JSON.parse(userJSON)?.id;
 
@@ -21,6 +24,7 @@ const CreateProductPage = () => {
   const [isOpenConfirmModal, setOpenConfirmModal] = useState(false);
   const [isProductNameRequired, setProductNameRequired] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
+  const [existedProduct, setExistedProduct] = useState<ProductResponse>();
 
   const [productCreateRequest, setProductCreateRequest] =
     useState<ProductCreateRequest>({ name: "", createdByUserId: userId });
@@ -62,6 +66,21 @@ const CreateProductPage = () => {
     setIsSaved(true);
   }, [productCreateRequest]);
 
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const product = (await productApi.getById(Number(productId))).data;
+        setExistedProduct(product);
+      } catch (err) {
+        console.log("error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  });
+
   return (
     <div className={cx("wrapper")}>
       <Header
@@ -74,6 +93,7 @@ const CreateProductPage = () => {
       <Body
         onChangeImages={setImages}
         userId={userId}
+        existedProduct={existedProduct}
         onChange={setProductCreateRequest}
       />
 
@@ -105,4 +125,4 @@ const CreateProductPage = () => {
   );
 };
 
-export default CreateProductPage;
+export default ProductDetails;

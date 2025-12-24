@@ -3,12 +3,7 @@ import styles from "./styles/dropdown-list.module.scss";
 import classNames from "classnames/bind";
 import { Icon } from "@iconify/react";
 
-const pageSizeOptions = [
-  { value: 10 },
-  { value: 20 },
-  { value: 50 },
-  { value: 100 },
-];
+const pageSizeOptions = [{ value: 20 }, { value: 50 }];
 
 interface DropdownListProps {
   value: any;

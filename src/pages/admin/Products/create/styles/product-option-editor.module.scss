@@ -1,3 +1,4 @@
+@use "@/styles" as *;
 .header {
   padding-bottom: 8px;
   margin-bottom: 16px;
@@ -50,7 +51,7 @@
 
 .add-option-btn {
   background-color: transparent;
-  color: vars.$accent-primary;
+  color: $accent-primary;
   display: flex;
   align-items: center;
   &:hover {

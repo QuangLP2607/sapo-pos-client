@@ -1,3 +1,5 @@
+@use "@/styles" as *;
+
 .pagination-dropdown {
   position: relative;
   display: inline-block;
@@ -9,8 +11,8 @@
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
-  background-color: vars.$bg-paper;
-  border: 1px solid vars.$gray-300;
+  background-color: $bg-paper;
+  border: 1px solid $gray-300;
   border-radius: 8px;
   text-align: left;
   cursor: pointer;
@@ -20,7 +22,7 @@
   transition: border-color 0.2s ease;
 
   &:hover {
-    border-color: vars.$accent-primary;
+    border-color: $accent-primary;
   }
 }
 
@@ -36,8 +38,8 @@
   right: 0;
   margin: 4px 0 0 0;
   padding: 4px 4px;
-  background-color: vars.$bg-paper;
-  border: 1px solid vars.$gray-300;
+  background-color: $bg-paper;
+  border: 1px solid $gray-300;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   list-style: none;

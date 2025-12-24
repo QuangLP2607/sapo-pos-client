@@ -5,14 +5,18 @@ import styles from "../styles/footer.module.scss";
 
 const cx = classNames.bind(styles);
 
-const Footer = () => {
-  const handleFunction = () => {};
-
+const Footer = ({
+  isSaved,
+  handleSave,
+}: {
+  isSaved: boolean;
+  handleSave: () => void;
+}) => {
   return (
     <footer className={cx("footer")}>
       <div className={cx("footer-header")}>
         <div className={cx("footer-btn")}>
-          <SaveButton onSave={handleFunction} />
+          <SaveButton isActive={isSaved} onSave={handleSave} />
         </div>
       </div>
 

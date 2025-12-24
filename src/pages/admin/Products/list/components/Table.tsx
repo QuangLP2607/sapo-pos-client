@@ -3,12 +3,14 @@ import styles from "./styles/product-table.module.scss";
 import { useState } from "react";
 import type { ProductPaginatedResponse } from "../../api/product.responses";
 import Image from "./Image";
+import { Link, useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 const ProductTable = ({ products }: { products: ProductPaginatedResponse }) => {
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const productData = products.data;
+  const navigate = useNavigate();
 
   const toggleSelect = (id: number) => {
     const newSelected = new Set(selectedItems);
@@ -26,6 +28,11 @@ const ProductTable = ({ products }: { products: ProductPaginatedResponse }) => {
     } else {
       setSelectedItems(new Set(productData.map((p) => p.id)));
     }
+  };
+
+  const handleForwardDetail = (productId: number) => {
+    console.log("productId::", productId);
+    navigate(`/admin/products/${productId}`);
   };
 
   return (
@@ -54,7 +61,10 @@ const ProductTable = ({ products }: { products: ProductPaginatedResponse }) => {
         </thead>
         <tbody>
           {productData.map((product) => (
-            <tr key={product.id}>
+            <tr
+              key={product.id}
+              onClick={() => handleForwardDetail(product.id)}
+            >
               <td className={cx("th-checkbox")}>
                 <input
                   type="checkbox"
@@ -72,9 +82,13 @@ const ProductTable = ({ products }: { products: ProductPaginatedResponse }) => {
               </td>
               <td>
                 <div className={cx("table-cell")}>
-                  <a href="#" className={cx("table-link")}>
+                  <Link
+                    to={`/admin/products/${product.id}`}
+                    className={cx("table-link")}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     {product.name}
-                  </a>
+                  </Link>
                 </div>
               </td>
               <td>

@@ -1,23 +1,61 @@
 import { Icon } from "@iconify/react";
 import styles from "@/pages/admin/Products/list/products.module.scss";
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DropdownList from "./components/DropdownList";
 import ProductTable from "./components/Table";
 import Filters from "./components/Filters";
 import type { ProductPaginatedResponse } from "../api/product.responses";
 import { useNavigate } from "react-router-dom";
+import { type SearchParams } from "../api/api";
 
 const cx = classNames.bind(styles);
 
-const ProductsListPage = ({ data }: { data: ProductPaginatedResponse }) => {
+const ProductsListPage = ({
+  data,
+  onChangeFilterValues,
+}: {
+  data: ProductPaginatedResponse;
+  onChangeFilterValues: (searchParams: SearchParams) => void;
+}) => {
   const [pageSize, setPageSize] = useState(20);
   const mockProductData = data;
   const navigate = useNavigate();
+  const [filtersValue, setFiltersValue] = useState<{
+    brandId?: number;
+    typeIds?: number[];
+    searchWord?: string;
+  }>();
+  const [pageNumber, setPageNumber] = useState<number>(data.currentPage);
+
+  const params = useMemo(
+    () => ({
+      brandId: filtersValue?.brandId,
+      limit: pageSize,
+      page: pageNumber,
+      search: filtersValue?.searchWord,
+      typeIds: filtersValue?.typeIds,
+    }),
+    [filtersValue, pageNumber, pageSize]
+  );
+
+  useEffect(() => {
+    onChangeFilterValues(params);
+  }, [params, onChangeFilterValues]);
 
   const forwardToCreatePage = () => {
     navigate("/admin/products/create");
   };
+
+  const handleChangePageNumber = (isPrevious: boolean) => {
+    if (isPrevious && data.hasPrevious) {
+      setPageNumber((prev) => prev - 1);
+    } else if (!isPrevious && data.hasNext) {
+      setPageNumber((prev) => prev + 1);
+    }
+  };
+
+  console.log("mock data::", mockProductData);
 
   return (
     <div className={cx("container")}>
@@ -38,7 +76,7 @@ const ProductsListPage = ({ data }: { data: ProductPaginatedResponse }) => {
         </div>
       </div>
       {/* Filters */}
-      <Filters />
+      <Filters onChangeFilterValues={setFiltersValue} />
 
       {/* Table */}
       <ProductTable products={mockProductData} />
@@ -58,26 +96,32 @@ const ProductsListPage = ({ data }: { data: ProductPaginatedResponse }) => {
         </div>
         <div className={cx("pagination-controls")}>
           <button
+            onClick={() => {
+              handleChangePageNumber(true);
+            }}
             className={
               mockProductData.hasPrevious
                 ? cx("page-btn")
                 : cx("page-btn", "disable-btn")
             }
-            disabled={mockProductData.hasPrevious}
+            disabled={!mockProductData.hasPrevious}
           >
             <Icon icon="meteor-icons:angle-left" />
           </button>
 
           <div className={cx("pagination-page")}>
-            {mockProductData.currentPage}
+            {mockProductData.currentPage + 1}
           </div>
           <button
+            onClick={() => {
+              handleChangePageNumber(false);
+            }}
             className={
               mockProductData.hasNext
                 ? cx("page-btn")
                 : cx("page-btn", "disable-btn")
             }
-            disabled={mockProductData.hasNext}
+            disabled={!mockProductData.hasNext}
           >
             <Icon icon="meteor-icons:angle-right" />
           </button>

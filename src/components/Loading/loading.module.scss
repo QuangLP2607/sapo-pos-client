@@ -3,10 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
+  min-height: 100vh;
   gap: 20px;
   padding: 32px;
   color: #555;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
 }
 
 .message {

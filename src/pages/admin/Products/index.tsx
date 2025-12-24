@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductsListPage from "./list";
-import productApi from "./api/api";
+import productApi, { type SearchParams } from "./api/api";
 import type { ProductPaginatedResponse } from "./api/product.responses";
 import Loading from "@/components/Loading/Loading";
 
@@ -14,13 +14,16 @@ const Products = () => {
     hasNext: false,
     hasPrevious: false,
   });
+  const [searchParams, setSearchParams] = useState<SearchParams>();
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const products = (await productApi.getOrSearchProducts()).data;
+        const products = (
+          await productApi.getOrSearchProducts(searchParams ? searchParams : {})
+        ).data;
         setProductsList(products);
       } catch (err) {
         console.error("Product list error:", err);
@@ -40,11 +43,15 @@ const Products = () => {
     };
 
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      {isLoading ? <Loading /> : <ProductsListPage data={productsList} />}
+      <ProductsListPage
+        onChangeFilterValues={setSearchParams}
+        data={productsList}
+      />
+      {isLoading && <Loading />}
     </div>
   );
 };

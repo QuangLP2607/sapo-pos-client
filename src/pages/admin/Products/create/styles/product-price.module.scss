@@ -1,6 +1,7 @@
+@use "@/styles" as *;
 .wrapper {
   border-radius: 6px;
-  background-color: vars.$bg-paper;
+  background-color: $bg-paper;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 1px,
     rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;
 }

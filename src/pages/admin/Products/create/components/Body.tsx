@@ -6,59 +6,91 @@ import BrandAndType from "./BrandAndTypes";
 import ProductImage from "./ProductImage";
 import ProductOptionsEditor, { type EditedOption } from "./ProductOptionEditor";
 import ProductVariants, { type Variant } from "./ProductVariants";
-import { useState } from "react";
-import type { ProductImageResponse } from "../../api/product.responses";
+import { useEffect, useState } from "react";
+import type { ProductCreateRequest } from "../../api/product.request";
+import type { ProductResponse } from "../../api/product.responses";
 
 export interface BodyProps {
+  userId: string;
   initialProductInfo?: ProductInfoProps;
   initialProductVariants?: Variant;
+  onChange: (productCreateRequest: ProductCreateRequest) => void;
+  onChangeImages: (files: File[]) => void;
+  existedProduct?: ProductResponse;
 }
 
 const cx = classNames.bind(styles);
 
-const Body = ({}) => {
-  const fakeImages: ProductImageResponse[] = [
-    {
-      id: 103,
-      src: "https://res.cloudinary.com/dgbmaul7r/image/upload/v1766031050/dog_20251218111049_8d4a02b7.jpg",
-      alt: "Samsung Galaxy S24 Front",
-      position: 1,
-      filename: "galaxy-s24-1.jpg",
-      size: 1756383,
-      width: 1200,
-      height: 1200,
-    },
-    {
-      id: 101,
-      src: "https://bizweb.dktcdn.net/100/624/127/products/7688be9e-ec9e-4bc5-92a6-e88e107a7610.jpg?v=1765786434910",
-      alt: "iPhone 15 Pro Front View",
-      position: 1,
-      filename: "iphone15-pro-1.jpg",
-      size: 2048576,
-      width: 1200,
-      height: 1200,
-    },
-  ];
+const Body = ({
+  userId,
+  onChange,
+  onChangeImages,
+  existedProduct,
+}: BodyProps) => {
   const [options, setOptions] = useState<EditedOption[]>([]);
   const [variants, setVariants] = useState<Variant[]>([]);
   const [productInfos, setProductInfos] = useState<ProductInfoProps>({
-    barcode: "123456",
-    content: "hello, world",
-    name: "iphone 17 pro max",
-    sku: "siuuuuu",
-    summary: "Siuuuu",
-    unit: "piece",
+    barcode: existedProduct?.variants[0].barcode || "",
+    content: existedProduct?.content || "",
+    name: existedProduct?.name || "",
+    sku: existedProduct?.variants[0].sku || "",
+    summary: existedProduct?.summary || "",
+    unit: existedProduct?.variants[0].unit || "",
   });
   const [productPrices, setProductPrices] = useState<ProductPrices>({
-    basePrice: 0,
-    comparePrice: 0,
-    inventoryQuantity: 0,
-    price: 0,
-    taxable: false,
+    basePrice: existedProduct?.variants[0].base_price || 0,
+    comparePrice: existedProduct?.variants[0].compare_at_price || 0,
+    inventoryQuantity: existedProduct?.variants[0].inventory_quantity || 0,
+    price: existedProduct?.variants[0].price || 0,
+    taxable: existedProduct?.variants[0].taxable || false,
   });
   const [productImages, setProductImages] = useState<File[]>();
+  const [brandAndTypes, setBrandAndTypes] = useState<{
+    brandId: number;
+    typeIds: number[];
+  }>();
 
-  console.log("product images::", productImages);
+  useEffect(() => {
+    onChange({
+      createdByUserId: Number(userId),
+      name: productInfos.name || "",
+      brandId:
+        brandAndTypes?.brandId === 0 ? undefined : brandAndTypes?.brandId,
+      typeIds: brandAndTypes?.typeIds || undefined,
+      content: productInfos?.content,
+      options: options.map((option, index) => ({
+        name: option.name,
+        position: index + 1,
+        values: option.values.map((value) => ({
+          value,
+        })),
+      })),
+      status: "ACTIVE",
+      summary: productInfos.summary,
+      variants: variants.map((variant, index) => ({
+        sku: variant.sku,
+        barcode: variant.barcode,
+        price: Number(variant.price),
+        basePrice: variant.basePrice,
+        title: variant.title,
+        option1: variant.option1 ?? undefined,
+        option2: variant.option2 ?? undefined,
+        option3: variant.option3 ?? undefined,
+        taxable: variant.taxable,
+        inventoryQuantity: variant.inventoryQuantity,
+        unit: variant.unit,
+        position: index + 1,
+      })),
+    });
+    onChangeImages(productImages || []);
+  }, [
+    productInfos,
+    productPrices,
+    variants,
+    options,
+    productImages,
+    brandAndTypes,
+  ]);
 
   return (
     <div className={cx("body")}>
@@ -72,11 +104,27 @@ const Body = ({}) => {
           onProductPricesChange={setProductPrices}
         />
         <ProductOptionsEditor onOptionsChange={setOptions} />
-        <ProductVariants options={options} onVariantsChange={setVariants} />
+        <ProductVariants
+          defaultVariantValues={{
+            unit: productInfos.unit,
+            inventoryQuantity: productPrices.inventoryQuantity,
+            sku: productInfos.sku || "",
+            barcode: productInfos.barcode,
+            price: String(productPrices.price),
+            basePrice: productPrices.basePrice,
+            taxable: productPrices.taxable,
+          }}
+          initialVariants={existedProduct?.variants}
+          options={options}
+          onVariantsChange={setVariants}
+        />
       </div>
       <div className={cx("second-body-element")}>
-        <ProductImage onChange={setProductImages} />
-        <BrandAndType />
+        <ProductImage
+          initialData={existedProduct?.images}
+          onChange={setProductImages}
+        />
+        <BrandAndType onChange={setBrandAndTypes} />
       </div>
     </div>
   );

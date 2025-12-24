@@ -2,7 +2,7 @@
 
 import classNames from "classnames/bind";
 import styles from "../styles/product-variants.module.scss"; // bạn có thể tạo file SCSS riêng
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import InputField from "./InputField";
 import { type EditedOption } from "./ProductOptionEditor"; // import interface chung
 import Container from "./Container";
@@ -11,6 +11,10 @@ const cx = classNames.bind(styles);
 
 export interface Variant {
   id?: number;
+  barcode?: string;
+  basePrice?: number;
+  taxable?: boolean;
+  unit?: string;
   title: string;
   option1: string | null;
   option2: string | null;
@@ -21,11 +25,24 @@ export interface Variant {
 }
 
 interface ProductVariantsProps {
+  initialVariants?: Variant[];
   options: EditedOption[];
   onVariantsChange?: (variants: Variant[]) => void;
+  defaultVariantValues?: Pick<
+    Variant,
+    | "barcode"
+    | "basePrice"
+    | "taxable"
+    | "unit"
+    | "price"
+    | "inventoryQuantity"
+    | "sku"
+  >;
 }
 
 const ProductVariants = ({
+  defaultVariantValues,
+  initialVariants = [],
   options,
   onVariantsChange,
 }: ProductVariantsProps) => {
@@ -55,20 +72,27 @@ const ProductVariants = ({
         option1: combo[0] || null,
         option2: combo[1] || null,
         option3: combo[2] || null,
-        sku: "",
-        price: "",
-        inventoryQuantity: 0,
-      };
+        sku: defaultVariantValues?.sku,
+        price: defaultVariantValues?.price ?? "",
+        inventoryQuantity: defaultVariantValues?.inventoryQuantity ?? 0,
+        barcode: defaultVariantValues?.barcode,
+        basePrice: defaultVariantValues?.basePrice,
+        taxable: defaultVariantValues?.taxable,
+        unit: defaultVariantValues?.unit,
+      } as Variant;
     });
   }, [options]);
 
   const [editedVariants, setEditedVariants] = useState<Variant[]>([]);
+  useEffect(() => {
+    if (initialVariants.length > 0) {
+      setEditedVariants(initialVariants);
+    } else {
+      setEditedVariants(generatedVariants);
+    }
+  }, [initialVariants, generatedVariants]);
 
-  useMemo(() => {
-    setEditedVariants(generatedVariants);
-  }, [generatedVariants]);
-
-  useMemo(() => {
+  useEffect(() => {
     onVariantsChange?.(editedVariants);
   }, [editedVariants, onVariantsChange]);
 
@@ -104,6 +128,8 @@ const ProductVariants = ({
                 <th>SKU</th>
                 <th>Giá</th>
                 <th>Tồn kho</th>
+                <th>Giá vốn</th>
+                <th>Barcode</th>
               </tr>
             </thead>
             <tbody>
@@ -144,6 +170,30 @@ const ProductVariants = ({
                       }
                       placeholder="0"
                       min="0"
+                    />
+                  </td>
+                  <td>
+                    <InputField
+                      type="number"
+                      value={variant.basePrice}
+                      onChange={(e) =>
+                        handleVariantChange(
+                          index,
+                          "basePrice",
+                          Number(e.target.value) || 0
+                        )
+                      }
+                      placeholder="0"
+                      min="0"
+                    />
+                  </td>
+                  <td>
+                    <InputField
+                      value={variant.barcode}
+                      onChange={(e) =>
+                        handleVariantChange(index, "barcode", e.target.value)
+                      }
+                      placeholder="Nhập barcode"
                     />
                   </td>
                 </tr>

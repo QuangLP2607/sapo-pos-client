@@ -1,6 +1,7 @@
 @use "sass:color";
+@use "@/styles" as *;
 // Colors
-$bg-light: vars.$bg-paper;
+$bg-light: $bg-paper;
 $border-color: #e5e7eb;
 $error-text: #6b7280;
 $icon-color: #9ca3af;
@@ -72,7 +73,7 @@ $icon-color: #9ca3af;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, vars.$bg-hover 0%, $bg-light 100%);
+  background: linear-gradient(135deg, $bg-hover 0%, $bg-light 100%);
   border-radius: 8px;
   border: 2px dashed $border-color;
   padding: 24px;

@@ -1,3 +1,5 @@
+@use "@/styles" as *;
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -16,7 +18,7 @@
   align-items: center;
 
   &:hover {
-    border-color: vars.$accent-primary;
+    border-color: $accent-primary;
   }
 }
 
@@ -58,7 +60,7 @@
   align-items: center;
 
   &:hover {
-    border-color: vars.$accent-primary;
+    border-color: $accent-primary;
   }
 }
 
@@ -72,7 +74,7 @@
 .image-item {
   position: relative;
   border-radius: 6px;
-  border: 1px solid vars.$border-default;
+  border: 1px solid $border-default;
   overflow: hidden;
   display: flex;
   align-items: center;

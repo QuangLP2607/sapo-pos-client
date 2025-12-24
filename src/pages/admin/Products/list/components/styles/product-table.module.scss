@@ -1,9 +1,10 @@
+@use "@/styles" as *;
 // Table Container
 .table-container {
-  background-color: vars.$bg-paper;
+  background-color: $bg-paper;
   margin: 24px 32px;
   border-radius: 8px;
-  border: 1px solid vars.$gray-200;
+  border: 1px solid $gray-200;
   overflow: hidden;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
 }
@@ -14,7 +15,7 @@ table {
   border-collapse: collapse;
 
   thead {
-    background-color: vars.$gray-100;
+    background-color: $gray-100;
   }
 
   th {
@@ -22,19 +23,19 @@ table {
     text-align: left;
     font-size: 14px;
     font-weight: 500;
-    color: vars.$gray-700;
-    border-bottom: 1px solid vars.$gray-200;
+    color: $gray-700;
+    border-bottom: 1px solid $gray-200;
   }
 
   td {
     padding: 8px 16px;
-    border-bottom: 1px solid vars.$gray-200;
+    border-bottom: 1px solid $gray-200;
     font-size: 14px;
   }
 
   tbody tr:hover {
     cursor: pointer;
-    background-color: vars.$gray-50;
+    background-color: $gray-50;
   }
 }
 
@@ -54,7 +55,7 @@ table {
 
 // Table Link
 .table-link {
-  color: vars.$accent-primary;
+  color: $accent-primary;
   text-decoration: none;
   font-weight: 500;
 
@@ -66,18 +67,18 @@ table {
 // Variants Info
 .variants-info {
   font-weight: 500;
-  color: vars.$gray-900;
+  color: $gray-900;
 }
 
 // Variants Sub
 .variants-sub {
   font-size: 13px;
-  color: vars.$gray-500;
+  color: $gray-500;
 }
 
 // Empty Cell
 .empty-cell {
-  color: vars.$gray-400;
+  color: $gray-400;
 }
 
 // Colors

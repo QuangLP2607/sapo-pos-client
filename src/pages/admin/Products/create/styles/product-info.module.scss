@@ -1,3 +1,5 @@
+@use "@/styles" as *;
+
 .input-gap {
   margin-bottom: 6px;
 }
@@ -25,7 +27,7 @@
 .add-summary {
   background-color: transparent;
   padding: 6px 0;
-  color: vars.$accent-primary;
+  color: $accent-primary;
   font-size: 14px;
 
   &:hover {

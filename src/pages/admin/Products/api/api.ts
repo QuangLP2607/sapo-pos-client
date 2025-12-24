@@ -14,12 +14,19 @@ export interface SearchParams {
   sortBy?: string;
   order?: string;
   search?: string;
+  typeIds?: number[];
+  brandId?: number;
 }
 
 const productApi = {
   createProduct(productCreateRequest: ProductCreateRequest, images: File[]) {
     const formData = new FormData();
-    formData.append("product", JSON.stringify(productCreateRequest));
+    formData.append(
+      "product",
+      new Blob([JSON.stringify(productCreateRequest)], {
+        type: "application/json",
+      })
+    );
     images.forEach((image) => formData.append("images", image));
     return apiClient.post<ProductResponse>("/products", formData, {
       headers: {
@@ -34,12 +41,16 @@ const productApi = {
       page: 0,
       limit: 20,
       sortBy: "updatedAt",
-      order: "asc",
+      order: "desc",
     }
   ) {
     return apiClient.get<ProductPaginatedResponse>("/products", {
       params: searchParams,
     });
+  },
+
+  getById(productId: number) {
+    return apiClient.get<ProductResponse>(`/products/${productId}`);
   },
 
   updateById(productId: number, productUpdateRequest: ProductUpdateRequest) {

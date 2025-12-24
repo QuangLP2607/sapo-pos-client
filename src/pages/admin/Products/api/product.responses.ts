@@ -31,6 +31,7 @@ export interface ProductVariantResponse {
   barcode: string;
   price: number;
   compare_at_price: number;
+  base_price: number;
   title: string;
   option1: string;
   option2: string;

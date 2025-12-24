@@ -1,5 +1,7 @@
+@use "@/styles" as *;
+
 .filters {
-  background-color: vars.$bg-paper;
+  background-color: $bg-paper;
   padding: 16px 32px;
   border-bottom: 1px solid #e5e7eb;
 }
@@ -30,7 +32,7 @@
 
   &:focus {
     outline: none;
-    border-color: vars.$accent-primary;
+    border-color: $accent-primary;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   }
 }
